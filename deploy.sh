@@ -13,7 +13,7 @@ git commit -m "first commit"
  
  
 git branch -M main
-git remote add origin https://github.com/rsilva070589/templateExemplo.git
+git remote add origin https://github.com/rsilva070589/NovaMaxxVue.git
 
 git push -f origin main
  
