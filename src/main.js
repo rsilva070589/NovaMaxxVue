@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import { createPinia } from 'pinia' 
+import { createPinia } from 'pinia'   
 const pinia = createPinia()
 const app = createApp(App);
 
@@ -14,8 +14,7 @@ window.bootstrap = bootstrap;
 import '@/assets/sass/components/custom-modal.scss';
 
 // perfect scrollbar
-import PerfectScrollbar from 'vue3-perfect-scrollbar';
-import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css';
+
 
 //vue-meta
 import { createHead } from '@vueuse/head';
@@ -48,10 +47,12 @@ import vue3JsonExcel from 'vue3-json-excel';
 //vue-wizard
 import VueFormWizard from 'vue3-form-wizard';
 import 'vue3-form-wizard/dist/style.css';
+import PerfectScrollbar from 'vue3-perfect-scrollbar'
+import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css'
 
 // set default settings
 import appSetting from './app-setting';
 window.$appSetting = appSetting;
 window.$appSetting.init();
 
-app.use(pinia).use(store).use(router).use(i18n).use(PerfectScrollbar).use(VueNouislider).use(Maska).use(ClientTable).use(vue3JsonExcel).use(VueFormWizard).use(head).mount('#app');
+app.use(PerfectScrollbar).use(pinia).use(store).use(router).use(i18n).use(PerfectScrollbar).use(VueNouislider).use(Maska).use(ClientTable).use(vue3JsonExcel).use(VueFormWizard).use(head).mount('#app');

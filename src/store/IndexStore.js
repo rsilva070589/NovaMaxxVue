@@ -30,9 +30,15 @@ export const indexStore = defineStore("rotas", () =>{
 
     const itensTipo = []
 
-  
+    const itensSelecao = []
 
-    const dadosEmpresa = {}  
+    const boxSelect = null
+
+    const itemSelecionado = {
+        
+    }
+
+    const dadosEmpresa = {} 
     
     return {
         rotas,
@@ -40,7 +46,10 @@ export const indexStore = defineStore("rotas", () =>{
         dadosEmpresa,
         dadosItens,
         ambiente,
-        itensTipo 
+        itensTipo,
+        itensSelecao,
+        itemSelecionado,
+        boxSelect
     }
 });
 
