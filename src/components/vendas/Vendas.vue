@@ -2,15 +2,13 @@
  
  
     <div  
-    style="position: ; width: 100%"
+    style="position: relative; width: 100%"
     v-bind:style="{ 'background-image': 'url(' + imagemSala + ')' }"
- 
     >
 
     
-    <div style="color: white;">
-        {{ store.itensSelecao }} 
-     
+    <div style="color: white;"> 
+      {{ store.itensSelecao }}
     </div>
     
 
@@ -37,9 +35,7 @@
           <div style="color: whitesmoke; font-weight: bold; font-size: 18px;" >{{primeiraLetraMaiuscula(a)}}
           </div>
 
-<div style="display: flex; justify-content: center;  margin: 10px 0px 0px 15px; "
-@click="store.boxSelect=null"
->
+<div style="display: flex; justify-content: center;  margin: 10px 0px 0px 15px; ">
     <div style="background-color: ;">       
         <label class="container">Com Ilha
         <input type="radio" checked="checked" name="radio">
@@ -59,59 +55,74 @@
 
     
     <div style="color: white; padding: 0px 0px 7px 0px;" 
-            v-for="(b, indexB) in store.itensTipo.filter(x => x.AMBIENTE==a)" :key="indexB">
-         {{ primeiraLetraMaiuscula(b.TIPO) }} 
-         
-
-    <div   class="conteudo"  
- 
-     >
-      <div 
-       
-      style="  
-                    padding: opx 0px 0px 0px;
-                    background-color: #000000DD;
-                    width: 240px; 
-                    height: 25px;
-                    color: #D98427;
-                    text-transform: capitalize;        
-                    font-size: 16px;             
-                    border-style: solid;
-                    border-width: 0 0 2px 0;                    
-                   "   
-                   >
-
- 
-
-            <div  style="color: white"
-              @click="store.boxSelect= a+ '-' +b.TIPO "
-              v-if="store.boxSelect !=a+ '-' +b.TIPO"
+            v-for="(b, indexB) in store.itensTipo.filter(x => x.AMBIENTE==a)" :key="indexB"
+            
             >
-                Selecione
-            </div>
-
-            
-        
-            <div   
-                  
-                    v-for="(c, indexC) in store.dadosItens.filter(x => x.AMBIENTE==a && x.TIPO==b.TIPO)" :key="indexC"   
-                    v-if="store.boxSelect==a+ '-' +b.TIPO"          
+         {{ primeiraLetraMaiuscula(b.TIPO) }} 
+         {{ buscaItem(a, b.TIPO) }}
+         
+         <div v-if="!buscaItem(a, b.TIPO) > 0"
+              style=" background-color: #000000DD;    
+                      text-transform: capitalize;        
+                      font-size: 16px;             
+                      border-style: solid;
+                      border-width: 0 0 1px 0;    "                     
+               @click="store.BoxOpen = a+'-'+b.TIPO" 
                     >
-           
-           <div  >
-            {{primeiraLetraMaiuscula(c.DESCRICAO) }} - R$ {{ formataDinheiro(c.VALOR) }}
-           </div>
-            
+                Selecione
+        </div>  
+
+        <div  v-for="(c, indexC) in store.itensSelecao.filter(x=>  x.AMBIENTE ==a 
+                                                                && x.TIPO     ==b.TIPO 
+                                                                        )" 
+              :key="indexC"                                                              
+              style=" padding: 3px;
+                      background-color: #000000DD;    
+                      text-transform: capitalize;        h
+                      font-size: 16px;       
+                      color: #D98427;      
+                      border-style: solid;
+                      border-width: 0 0 1px 0;    "                     
+                @click="store.BoxOpen = a+'-'+b.TIPO" 
+              >
+            {{ primeiraLetraMaiuscula30(c.DESCRICAO) }}
+        </div>         
+        
+ 
+ <div class="conteudo">
+      
+      <div   style="
+                  background-color: #000000DD;                  
+                  color: #D98427;
+                  text-transform: capitalize;        
+                  font-size: 16px;             
+                  padding: 2px;
+                  height: auto;
+                  max-height: 40vh;    
+                  width: 700px;
+                "   
+            v-if="store.BoxOpen == a+'-'+b.TIPO"
+             >
+ 
+            <div    
+                    
+                    v-for="(d, indexD) in store.dadosItens.filter(x => x.AMBIENTE==a && x.TIPO==b.TIPO)" 
+                    :key="indexD"
+                    :value="d.DESCRICAO"  
+                    @click="incluiItem(d)"
+                    >
+                    
+            {{  primeiraLetraMaiuscula(d.DESCRICAO) }} - R$ {{ formataDinheiro(d.VALOR) }}
+
+               
+              
             </div> 
-
-       
-
+         
           
-        </div>
-    </div> 
+        </div>    
   
     </div>
-       
+   </div>     
         
     <div style="font-size: 20px; 
                 display: flex;
@@ -120,7 +131,7 @@
                 font-weight: bold; 
                 ">
                 <div>
-                    Total: R$ 
+                    Total: R$ {{totalAmbiente(a) }}
                 </div>
                 
     </div>
@@ -135,16 +146,18 @@
     </template>
     
     <script setup>
-    import {indexStore} from '../../store/IndexStore'
-    import axios from 'axios'
     
+    import {indexStore} from '../../store/IndexStore' 
+    import axios from 'axios'  
+   
+
     var imagemSala = 'https://finger.ind.br/wp-content/uploads/2021/08/post_thumbnail-a604185952a2859240903c1b2af3cd7c-1170x685.jpg'
     
     const store = indexStore(); 
     
     const arrayAmbiente = []
-    
-     
+
+ 
     
     async function getItens() {
     
@@ -172,28 +185,45 @@
     
     getItens()
     
-    async function getItensTipo() {    
-    var result = await axios.get('http://localhost:4040/itensTipo')      
-    store.itensTipo = (result.data)      
+    async function getItensTipo() {
+    
+    var result = await axios.get('http://localhost:4040/itensTipo') 
+     
+    store.itensTipo = (result.data)
+ 
+     
     } 
     getItensTipo()
-    
-    
-    
-   function primeiraLetraMaiuscula(minhaFrase) {  
 
+
+    function primeiraLetraMaiuscula30(minhaFrase) {  
     if (minhaFrase == null) {
         return null
     }else{
         var minusculo = minhaFrase.toLowerCase()
+        if(minusculo.length>30){
+          return (minusculo.substring(0,30)+'...').replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase())
+          }else{
+            return (minusculo.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase()))
+          }
+    
+    }
+   
+   }
 
+    
+    
+    
+    function primeiraLetraMaiuscula(minhaFrase) {  
+    if (minhaFrase == null) {
+        return null
+    }else{
+        var minusculo = minhaFrase.toLowerCase()
         if(minusculo.length>50){
           return (minusculo.substring(0,80)+'...').replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase())
           }else{
             return (minusculo.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase()))
           }
-
-
     
     }
    
@@ -210,56 +240,54 @@
            .replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
        }
 
-function SelectItem(item) {
-    store.itensSelecao.push({
-        item
-    })
-   
-}
-
-
-
-function totalComodo () {
-    const ArrayProv = []
-}
-
-
-function totalPedido ()  {
-/** somatoria de Todos os adicionais */
-  const ArrayProv = []
-  var pitem = store.pedido.pedido?.pedidoitem?.map(a => {    
-    
-    var t = a.adicionais?.filter(f => f.isadicionalprod == 's')
-      
-    var x = t?.map(i => {return i.valortotal}) || 0    
  
+
+
+function totalAmbiente(ambiente) {
+    
+/** somatoria de Todos os ambiente */
+      
+    var x = store.itensSelecao.filter(i => {i.AMBIENTE == ambiente})
+    
+    if (x.length > 0){
+      console.log('aaaa') 
+      }
+    
+    
+    
     var soma = 0;
       for(var i = 0; i < x.length; i++) {
-          soma += x[i];
+          soma += x[i.VALOR];
       }      
-      ArrayProv.push(soma)    
-     
-  })
+      console.log(soma)
+      return(soma)  
   
-  var totalAdicionais = 0;
-  for(var i = 0; i < ArrayProv.length; i++) {
-    totalAdicionais += ArrayProv[i];
-  }
-/** fim somatoria de Todos os adicionais */
- 
-      var somarPizza = store.pedido.pedido.pedidoitem.map(pedidoitem => {
-      return (pedidoitem.valorunitario * pedidoitem.quantidade) // + somaAdic      
-      }) 
-      let totalpizzas = 0
-      for(let i in somarPizza) {
-        totalpizzas += somarPizza[i] 
-      }
-       
-      store.pedido.pedido.valorpedido =  totalpizzas +totalAdicionais
-  
-}     
- 
+}
+
+
+   
     
+function buscaItem(ambiente, tipo) {
+   for(var i=0; i<store.itensSelecao.length; i++) {
+      if(store.itensSelecao[i].AMBIENTE === ambiente && store.itensSelecao[i].TIPO === tipo) {
+         return i
+      }
+  }
+} 
+
+function incluiItem(item) {
+  if (buscaItem(item.AMBIENTE, item.TIPO) > -1){
+    console.log('ja existe, index: '+ buscaItem(item.AMBIENTE, item.TIPO) + ', substituir' )
+    store.itensSelecao.splice(buscaItem(item.AMBIENTE, item.TIPO), 1)
+    store.itensSelecao.push(item)
+
+  }else{
+    console.log('item nao existe, incluir')
+    store.itensSelecao.push(item)
+  }
+  store.BoxOpen = '' 
+} 
+
 
    
      
@@ -270,34 +298,12 @@ function totalPedido ()  {
     </script>
     
     <style>
-
-.conteudo {    
-    flex-direction: row;
-    /* justify-content: center; */
-    align-items: center;
-    width: 100%;
-    overflow-x: auto;
-}
-
- 
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto auto;
-  grid-gap: 10px;  
-  
-}
-
-a:hover {
-  background-color: #628ed1;
-}    
- 
 /* The container */
 .container {
-  display: flex;
+  display: block;
   position: relative;
   padding-left: 25px;
   margin-bottom: 12px;
-   
   cursor: pointer;
   font-size: 13px;
   color: white;
@@ -356,4 +362,20 @@ a:hover {
 	border-radius: 50%;
 	background: white;
 }
+
+
+.conteudo {    
+    flex-direction: row;
+    /* justify-content: center; */
+    align-items: center;
+    width: 700px;
+    overflow-x: auto;
+}
+
+ 
+ 
+
+
+
+
 </style>
