@@ -424,8 +424,7 @@ function selecionarImagem(ambiente){
   return result
 }
  
-const columns = ref(['AMBIENTE', 'DESCRICAO', 'VALOR']); 
-const items = store.itensSelecao
+const columns = ref(['ID_ITEM','AMBIENTE', 'DESCRICAO', 'VALOR']); 
 
 const capitalize = (text) => {
         return text
