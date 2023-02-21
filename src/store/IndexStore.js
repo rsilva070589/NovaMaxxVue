@@ -39,11 +39,17 @@ export const indexStore = defineStore("rotas", () =>{
                         } ]
 
     const BoxOpen = null
+
+    const AmbienteOpen = null
+
+    const ilhaBalcao = 'ILHA'
     
 
     const itemSelecionado = null
 
     const dadosEmpresa = {} 
+
+    const imagens = []
     
     return {
         rotas,
@@ -54,7 +60,10 @@ export const indexStore = defineStore("rotas", () =>{
         itensTipo,
         itensSelecao,
         itemSelecionado,
-        BoxOpen
+        BoxOpen,
+        AmbienteOpen,
+        imagens,
+        ilhaBalcao
     }
 });
 

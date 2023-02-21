@@ -52,6 +52,8 @@ import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css'
 
 // set default settings
 import appSetting from './app-setting';
+
+
 window.$appSetting = appSetting;
 window.$appSetting.init();
 

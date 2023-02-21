@@ -1499,7 +1499,6 @@ mounted() {
 
 <script setup>
     import { onMounted, ref } from 'vue';
-
     import '@/assets/sass/scrollspyNav.scss';
     import '@/assets/sass/font-icons/fontawesome/css/regular.css';
     import '@/assets/sass/font-icons/fontawesome/css/fontawesome.css';

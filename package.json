@@ -38,6 +38,7 @@
         "vue-easy-lightbox": "^1.4.1",
         "vue-easymde": "^2.0.0",
         "vue-flatpickr-component": "^9.0.5",
+        "vue-html-to-paper": "^1.4.4",
         "vue-i18n": "^9.1.10",
         "vue-router": "^4.0.3",
         "vue3-apexcharts": "^1.4.1",
