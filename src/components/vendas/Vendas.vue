@@ -10,13 +10,7 @@
     v-bind:style="{ 'background-image': 'url(' + store.imagemAmbiente + ')' }"
     >
 
-    <div v-if="1==1"
-        style="background-color: blue;"
-        @click="testeRogerio()"
-        v-for=""
-    >
-        <h1>ESSA E A DIV DO ROGERIO</h1>
-    </div>
+  
    
     <div style="padding: 15px; width: 300px; position: relative;">
     
