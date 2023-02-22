@@ -5,12 +5,11 @@
             <header class="header navbar navbar-expand-sm">
                 <ul class="navbar-item theme-brand flex-row text-center">
                     <li class="nav-item theme-logo">
-                        <router-link to="/">
-                            <img src="@/assets/images/logo.svg" class="navbar-logo" alt="logo" />
-                        </router-link>
+                       
                     </li>
                     <li class="nav-item theme-text">
-                        <router-link to="/" class="nav-link"> CORK </router-link>
+                        
+                        <img src="@/assets/images/logo.png" class="navbar-logo" alt="logo" />
                     </li>
                 </ul>
                 <div class="d-none horizontal-menu">

@@ -47,7 +47,7 @@
   
 
   //const columns = ref(['ID_ITEM','AMBIENTE', 'APLICACAO', 'TIPO', 'NOMENCLATURA','FORNECEDOR','DESCRICAO']);
-  const columns = ref(['AMBIENTE', 'TIPO', 'OPCIONAL','DESCRICAO','VALOR']);
+  const columns = ref(['ID_ITEM','AMBIENTE', 'TIPO', 'OPCIONAL','DESCRICAO','VALOR']);
   const items = ref([]);
  
   const table_option = ref({
@@ -62,7 +62,7 @@
           filterPlaceholder: 'Search...',
           limit: 'Results:',
       },
-      sortable: ['AMBIENTE', 'TIPO', 'OPCIONAL','DESCRICAO','VALOR'],
+      sortable: ['ID','AMBIENTE', 'TIPO', 'OPCIONAL','DESCRICAO','VALOR'],
       sortIcon: {
           base: 'sort-icon-none',
           up: 'sort-icon-asc',

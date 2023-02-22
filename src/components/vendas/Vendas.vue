@@ -5,21 +5,23 @@
     style="background-attachment: fixed;
            width: 100%            
            font-family: Roboto, serif;
-           background-size: 100%;
-           
-
+           background-size: 100%; 
           "
     v-bind:style="{ 'background-image': 'url(' + store.imagemAmbiente + ')' }"
     >
- 
 
-    
-
+    <div v-if="1==1"
+        style="background-color: blue;"
+        @click="testeRogerio()"
+        v-for=""
+    >
+        <h1>ESSA E A DIV DO ROGERIO</h1>
+    </div>
+   
     <div style="padding: 15px; width: 300px; position: relative;">
     
-        <h2 style="color: black; font-size: 24px; margin-left: 15px;   ">Resumo do Pedido</h2>
-    
-     
+        <h2 style="color: black; font-size: 24px; margin-left: 15px;   ">Resumo do Pedido</h2> 
+
         <input style="padding: 5px; 
                 font-size: 18px;
                 background-color: #000000DD;
@@ -36,10 +38,10 @@
                    
                    "
           v-for="(a, indexA) in store.ambiente" :key="indexA">
-  <div style="color: whitesmoke; font-weight: bold; font-size: 18px;
-  border: 1px solid var(--bgContainer);
-                        transition: all 0.2s ease 0s;
-                        cursor: pointer;
+    <div style="color: whitesmoke; font-weight: bold; font-size: 18px;
+    border: 1px solid var(--bgContainer);
+                          transition: all 0.2s ease 0s;
+                          cursor: pointer;
                         
   " 
        @click="store.AmbienteOpen = a; selecionarImagem(store.AmbienteOpen) "
@@ -54,16 +56,25 @@
   <div v-if="store.AmbienteOpen == a  "> 
 
 <div style="display: flex; justify-content: center;  margin: 10px 0px 0px 15px; "
-     v-if="store.AmbienteOpen == 'COZINHA'"
+        
 >
-  <div style="" @click="store.ilhaBalcao='ILHA'; selecionarImagem(store.AmbienteOpen)">     
+
+  <div  v-if="getOpcional(store.AmbienteOpen, 'ILHA') > 0"     
+        style="" @click="store.ilhaBalcao='ILHA'; 
+                          selecionarImagem(store.AmbienteOpen)
+                          
+                          ">     
         <label class="container">Com Ilha
         <input type="radio" checked="checked" name="radio">
         <span class="checkmark"></span>
         </label>
     </div>    
-    <div style="" @click="store.ilhaBalcao='BALCAO'; selecionarImagem(store.AmbienteOpen)">   
- 
+
+    <div v-if="getOpcional(store.AmbienteOpen, 'BALCAO') > 0"  
+          style="" @click="store.ilhaBalcao='BALCAO';
+                           selecionarImagem(store.AmbienteOpen)
+                           
+                           ">  
             <label class="container">Com Balcão
             <input type="radio" name="radio">
             <span class="checkmark"></span>
@@ -78,7 +89,7 @@
             v-for="(b, indexB) in store.itensTipo.filter(x => x.AMBIENTE==a)" :key="indexB"            
             >
           <span style="font-size: 16px;">
-            {{ primeiraLetraMaiuscula(b.TIPO) }}  
+            {{ primeiraLetraMaiuscula(b.TIPO)}}  
           </span>  
    
          
@@ -242,7 +253,7 @@
     
     </template>
     
-    <script setup>
+<script setup>
     
     import {indexStore} from '../../store/IndexStore' 
     import axios from 'axios'  
@@ -314,9 +325,6 @@
     }
    
    }
-
-    
-    
     
     function primeiraLetraMaiuscula(minhaFrase) {  
     if (minhaFrase == null) {
@@ -342,26 +350,23 @@
            .toFixed(2)
            .replace(".", ",")
            .replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
-       }
-
+    }
  
-
-
-function totalAmbiente(ambiente) {
+    function totalAmbiente(ambiente) {
+        
+      /** somatoria de Todos os ambiente */
+        
+      var arr =  store.itensSelecao.filter(i => i.AMBIENTE == ambiente)
     
-  /** somatoria de Todos os ambiente */
-    
-  var arr =  store.itensSelecao.filter(i => i.AMBIENTE == ambiente)
- 
-  var sum = 0; 
+      var sum = 0; 
 
-  for(var i =0;i<arr.length;i++){ 
-    sum+=arr[i].VALOR; 
-  } 
-  console.log(sum);
-  return formataDinheiro(sum)
+      for(var i =0;i<arr.length;i++){ 
+        sum+=arr[i].VALOR; 
+      } 
+      console.log(sum);
+      return formataDinheiro(sum)
 
-}
+    }
 
 function totalGeral () {
     
@@ -379,6 +384,14 @@ function totalGeral () {
   
   }
    
+function getOpcional (ambiente,opcional) {
+   for(var i=0; i<store.dadosItens.length; i++) {
+      if(store.dadosItens[i].AMBIENTE === ambiente && store.dadosItens[i].OPCIONAL === opcional) {
+         return i
+      }
+  }
+} 
+
     
 function buscaItem(ambiente, tipo) {
    for(var i=0; i<store.itensSelecao.length; i++) {
@@ -393,7 +406,6 @@ function incluiItem(item) {
     console.log('ja existe, index: '+ buscaItem(item.AMBIENTE, item.TIPO) + ', substituir' )
     store.itensSelecao.splice(buscaItem(item.AMBIENTE, item.TIPO), 1)
     store.itensSelecao.push(item)
-
   }else{
     console.log('item nao existe, incluir')
     store.itensSelecao.push(item)
@@ -523,7 +535,9 @@ const export_table = (type) => {
  
      
 
-
+function testeRogerio() {
+    console.log('olaaaa Renato')
+}
  
     </script>
     
