@@ -21,7 +21,7 @@
                 background-color: #000000DD;
                 color: white;
                 width: 265px;
-                border-radius: 10px;" type="text" placeholder="Nome do Cliente">     
+                border-radius: 10px;" type="text" placeholder="Nome do Cliente" v-model="store.nomeCliente">     
     
     <div  
             style="padding: 10px;
@@ -38,7 +38,10 @@
                           cursor: pointer;
                         
   " 
-       @click="store.AmbienteOpen = a; selecionarImagem(store.AmbienteOpen) "
+       @click="store.AmbienteOpen = a; 
+                         selecionarImagem(store.AmbienteOpen); 
+                         store.dadosItensFiltro = store.dadosItens; 
+                         store.ilhaBalcao=null "
   >
 
   <span class="item">
@@ -50,13 +53,13 @@
   <div v-if="store.AmbienteOpen == a  "> 
 
 <div style="display: flex; justify-content: center;  margin: 10px 0px 0px 15px; "
-        
+        @click=""
 >
 
   <div  v-if="getOpcional(store.AmbienteOpen, 'ILHA') > 0"     
         style="" @click="store.ilhaBalcao='ILHA'; 
                           selecionarImagem(store.AmbienteOpen)
-                          
+                          dadosFiltro(store.AmbienteOpen, store.ilhaBalcao)                
                           ">     
         <label class="container">Com Ilha
         <input type="radio" checked="checked" name="radio">
@@ -67,7 +70,7 @@
     <div v-if="getOpcional(store.AmbienteOpen, 'BALCAO') > 0"  
           style="" @click="store.ilhaBalcao='BALCAO';
                            selecionarImagem(store.AmbienteOpen)
-                           
+                           dadosFiltro(store.AmbienteOpen, store.ilhaBalcao)  
                            ">  
             <label class="container">Com Balcão
             <input type="radio" name="radio">
@@ -153,7 +156,7 @@
  
             <div class="itemSelect"
               style="display: flex; justify-content: space-between; padding-right: 15px;"                 
-              v-for="(d, indexD) in store.dadosItens.filter(x => x.AMBIENTE==a && x.TIPO==b.TIPO)" 
+              v-for="(d, indexD) in store.dadosItensFiltro.filter(x => x.AMBIENTE==a && x.TIPO==b.TIPO)" 
               :key="indexD"
               :value="d.DESCRICAO"  
               @click="incluiItem(d)"
@@ -270,9 +273,10 @@
     
     async function getItens() {
     
-    var result = await axios.get('http://localhost:4040/itens') 
+    var result = await axios.get('http://34.172.134.46:4040/itens') 
      
     store.dadosItens = result.data
+    store.dadosItensFiltro = result.data
     
     store.dadosItens.forEach(i => {    
         arrayAmbiente.push (i.AMBIENTE)      
@@ -293,10 +297,31 @@
     } 
     
     getItens()
+
+
+    function dadosFiltro(ambiente, tipo, opcional) {
+      console.log('funcao dadosFiltro()' + store.ilhaBalcao+ambiente)
+      store.dadosItensFiltro = store.dadosItens
+
+
+       if (store.ilhaBalcao == null) {        
+        store.dadosItensFiltro = store.dadosItensFiltro.filter(x => x.AMBIENTE == ambiente)        
+       }else{
+        if (store.ilhaBalcao == 'ILHA') {
+          store.dadosItensFiltro = store.dadosItensFiltro.filter(x =>  x.AMBIENTE == ambiente && x.OPCIONAL != 'BALCAO')
+          store.ilhaBalcao
+        } else{
+          store.dadosItensFiltro = store.dadosItensFiltro.filter(x =>  x.AMBIENTE == ambiente && x.OPCIONAL != 'ILHA')
+        }        
+       }
+       store.ilhaBalcao=null
+    }
     
+   
+
     async function getItensTipo() {
     
-    var result = await axios.get('http://localhost:4040/itensTipo') 
+    var result = await axios.get('http://34.172.134.46:4040/itensTipo') 
      
     store.itensTipo = (result.data)
  
@@ -357,7 +382,7 @@
       for(var i =0;i<arr.length;i++){ 
         sum+=arr[i].VALOR; 
       } 
-      console.log(sum);
+      
       return formataDinheiro(sum)
 
     }
@@ -373,7 +398,7 @@ function totalGeral () {
     for(var i =0;i<arr.length;i++){ 
       sum+=arr[i].VALOR; 
     } 
-    console.log(sum);
+
     return formataDinheiro(sum)
   
   }
@@ -397,18 +422,18 @@ function buscaItem(ambiente, tipo) {
 
 function incluiItem(item) {
   if (buscaItem(item.AMBIENTE, item.TIPO) > -1){
-    console.log('ja existe, index: '+ buscaItem(item.AMBIENTE, item.TIPO) + ', substituir' )
+    
     store.itensSelecao.splice(buscaItem(item.AMBIENTE, item.TIPO), 1)
     store.itensSelecao.push(item)
   }else{
-    console.log('item nao existe, incluir')
+   
     store.itensSelecao.push(item)
   }
   store.BoxOpen = '' 
 } 
 
 async function getImagens() {
-      var result = await axios.get('http://localhost:4040/imagens')      
+      var result = await axios.get('http://34.172.134.46:4040/imagens')      
      store.imagens = result.data       
     }
     
@@ -430,7 +455,7 @@ function selecionarImagem(ambiente){
   return result
 }
  
-const columns = ref(['ID_ITEM','AMBIENTE', 'DESCRICAO', 'VALOR']); 
+const columns = ref(['TIPO', 'DESCRICAO', 'VALOR']); 
 
 const capitalize = (text) => {
         return text
@@ -445,7 +470,7 @@ const capitalize = (text) => {
 const export_table = (type) => {
         let cols = columns.value.filter((d) => d != 'profile' && d != 'action');
         let records = store.itensSelecao;
-        let filename = 'table';
+        let filename = store.nomeCliente || 'sem nome';
 
         if (type == 'csv') {
             let coldelimiter = ',';
@@ -508,30 +533,40 @@ const export_table = (type) => {
             winPrint.print();
             // winPrint.close();
         } else if (type == 'pdf') {
+
             cols = cols.map((d) => {
                 return { header: capitalize(d), dataKey: d };
             });
+
             const doc = new jsPDF('l', 'pt', cols.length > 10 ? 'a3' : 'a4');
-            doc.autoTable({
-                headStyles: { fillColor: '#eff5ff', textColor: '#515365' },
+            
+            const arrayHead = []
+
+            store.ambiente.map( x => {   
+              arrayHead.push()
+              console.log(cols)
+              doc.autoTable({           
+                headStyles: { fillColor: '#eff5ff', textColor: '#515365', fontsize: 40 },
+                head: [{TIPO: x}],
                 columns: cols,
-                body: records,
+                body: store.itensSelecao.filter(d => d.AMBIENTE == x),                
                 styles: { overflow: 'linebreak' },
                 pageBreak: 'auto',
                 margin: { top: 45 },
                 didDrawPage: () => {
                     doc.text('ANEXO 1', cols.length > 10 ? 535 : 365, 30);
                 },
-            });
+            });          
+            }) 
+
+            console.log(arrayHead)
+           
             doc.save(filename + '.pdf');
         }
     };
  
      
 
-function testeRogerio() {
-    console.log('olaaaa Renato')
-}
  
     </script>
     

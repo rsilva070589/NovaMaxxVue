@@ -13,7 +13,7 @@ export const indexStore = defineStore("rotas", () =>{
        telaAtualNome: 'BEM-VINDO',
        baseApiHTTPS: 'https://easypedidos.sytes.net:8082',
        //baseApi: 'http://200.10.135.208:8080/evento',
-       baseApi: 'http://localhost:4042'    ,
+       baseApi: 'http://34.172.134.46:4040'    ,
        databasecliente: '',
        method: 'get'  ,
        etapaPedido: 0,
@@ -26,9 +26,11 @@ export const indexStore = defineStore("rotas", () =>{
 
     const dadosItens = []
 
+    const dadosItensFiltro = []
+
     const ambiente = []
 
-    const itensTipo = []
+    const itensTipo = []     
 
     const itensSelecao = [ { AMBIENTE: null, 
                                 TIPO: null, 
@@ -42,7 +44,7 @@ export const indexStore = defineStore("rotas", () =>{
 
     const AmbienteOpen = null
 
-    const ilhaBalcao = 'ILHA'
+    const ilhaBalcao = null
     
 
     const itemSelecionado = null
@@ -50,6 +52,8 @@ export const indexStore = defineStore("rotas", () =>{
     const dadosEmpresa = {} 
 
     const imagens = []
+
+    
     
     return {
         rotas,
@@ -63,7 +67,8 @@ export const indexStore = defineStore("rotas", () =>{
         BoxOpen,
         AmbienteOpen,
         imagens,
-        ilhaBalcao
+        ilhaBalcao,
+        dadosItensFiltro
     }
 });
 

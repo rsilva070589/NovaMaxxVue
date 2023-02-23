@@ -12,14 +12,14 @@ import Vendas from '../components/vendas/Vendas.vue';
 const routes = [
     //dashboard
     {
-        path: '/vendas',
+        path: '/',
         name: 'Vendas',
         component: () => import(/* webpackChunkName: "auth-login-boxed" */ '../components/vendas/Vendas.vue'),
         meta: { layout: 'auth' },
     },
     
 
-    { path: '/', name: 'Home', component: Home },
+  
 
     {
         path: '/index2',
