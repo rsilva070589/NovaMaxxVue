@@ -267,6 +267,8 @@
     import itens from './itens.js'
     import itensTipo from './itensTipo.js'
     import imagens from './imagens.js'
+
+    console.log(imagens)
  
    
     const store = indexStore(); 
@@ -446,13 +448,14 @@ getImagens()
 
 
 function selecionarImagem(ambiente){
+  console.log(ambiente)
   var result = store.imagens.filter(x=> x.AMBIENTE==ambiente) 
   result.map(a=> {
     if(store.ilhaBalcao == 'ILHA')
     {
       store.imagemAmbiente = a.IMG
     }else{
-      store.imagemAmbiente = a.IMG_BALCAO
+      store.imagemAmbiente = a.IMG_BALCAO || a.IMG
     }
     
 
