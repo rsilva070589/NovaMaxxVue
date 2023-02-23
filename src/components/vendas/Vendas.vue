@@ -264,7 +264,11 @@
     import { useMeta } from '@/composables/use-meta'; 
     import jsPDF from 'jspdf';
     import 'jspdf-autotable';
-    
+    import itens from './itens.js'
+    import itensTipo from './itensTipo.js'
+    import imagens from './imagens.js'
+ 
+   
     const store = indexStore(); 
     
     const arrayAmbiente = []
@@ -273,10 +277,11 @@
     
     async function getItens() {
     
-    var result = await axios.get('http://34.172.134.46:4040/itens') 
+    //var result = await axios.get('./http://34.172.134.46:4040/itens') 
+    
      
-    store.dadosItens = result.data
-    store.dadosItensFiltro = result.data
+    store.dadosItens = itens
+    store.dadosItensFiltro = itens
     
     store.dadosItens.forEach(i => {    
         arrayAmbiente.push (i.AMBIENTE)      
@@ -321,10 +326,10 @@
 
     async function getItensTipo() {
     
-    var result = await axios.get('http://34.172.134.46:4040/itensTipo') 
+    //var result = await axios.get('http://34.172.134.46:4040/itensTipo') 
+    
      
-    store.itensTipo = (result.data)
- 
+    store.itensTipo = itensTipo
      
     } 
     getItensTipo()
@@ -433,8 +438,8 @@ function incluiItem(item) {
 } 
 
 async function getImagens() {
-      var result = await axios.get('http://34.172.134.46:4040/imagens')      
-     store.imagens = result.data       
+    //  var result = await axios.get('http://34.172.134.46:4040/imagens')      
+     store.imagens = imagens      
     }
     
 getImagens()
