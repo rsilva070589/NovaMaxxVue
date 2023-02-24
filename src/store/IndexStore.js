@@ -6,8 +6,8 @@ export const indexStore = defineStore("rotas", () =>{
     const rotas = ref({ 
     }); 
 
-   //const baseApiHTTPS  = 'https://api-simple-json-production.up.railway.app'
-   const baseApiHTTPS  = 'localhost:5050'
+   const baseApiHTTPS  = 'https://api-simple-json-production.up.railway.app'
+  // const baseApiHTTPS  = 'localhost:5050'
 
     const dadosItens = []
 
