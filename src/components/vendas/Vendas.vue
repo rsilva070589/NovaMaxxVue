@@ -274,7 +274,7 @@
     
     async function getItens() {
     
-    var result = await axios.get('http://localhost:5050/itens') 
+    var result = await axios.get('api-simple-json-production.up.railway.app/itens') 
     
      console.log(result.data.filter(x => x.AMBIENTE=='COZINHA'))
      
@@ -325,7 +325,7 @@
 
     async function getItensTipo() {
     
-    var result = await axios.get('http://localhost:5050/itenstipo') 
+    var result = await axios.get('api-simple-json-production.up.railway.app/itenstipo') 
     
      console.log(result)
     store.itensTipo = result.data
@@ -437,7 +437,7 @@ function incluiItem(item) {
 } 
 
 async function getImagens() {
-     var result = await axios.get('localhost:5050/imagens')      
+     var result = await axios.get('api-simple-json-production.up.railway.app/imagens')      
      store.imagens = result.data 
     }
     
