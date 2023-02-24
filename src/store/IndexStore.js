@@ -6,23 +6,8 @@ export const indexStore = defineStore("rotas", () =>{
     const rotas = ref({ 
     }); 
 
-    const recursos = ref({
-       telaMobile:   false,
-       sidebar:     false,
-       telaContentAtual: 'DADOSEMPRESA',
-       telaAtualNome: 'BEM-VINDO',
-       baseApiHTTPS: 'https://easypedidos.sytes.net:8082',
-       //baseApi: 'http://200.10.135.208:8080/evento',
-       baseApi: 'http://34.172.134.46:4040'    ,
-       databasecliente: '',
-       method: 'get'  ,
-       etapaPedido: 0,
-       buttonAvancar: false,
-       carregando: false,
-       ip: '127.0.0.1',
-       dominio: 'suapizzaria'
-       
-    }); 
+   //const baseApiHTTPS  = 'https://api-simple-json-production.up.railway.app'
+   const baseApiHTTPS  = 'localhost:5050'
 
     const dadosItens = []
 
@@ -36,7 +21,7 @@ export const indexStore = defineStore("rotas", () =>{
                                 TIPO: null, 
                                 OPCIONAL: null, 
                                 DESCRICAO: null,
-                                 VALOR: null ,
+                                PRECO_TOTAL: null ,
                                  ID_ITEM: null 
                         } ]
 
@@ -56,8 +41,7 @@ export const indexStore = defineStore("rotas", () =>{
     
     
     return {
-        rotas,
-        recursos,
+        rotas,        
         dadosEmpresa,
         dadosItens,
         ambiente,
@@ -68,7 +52,8 @@ export const indexStore = defineStore("rotas", () =>{
         AmbienteOpen,
         imagens,
         ilhaBalcao,
-        dadosItensFiltro
+        dadosItensFiltro,
+        baseApiHTTPS
     }
 });
 

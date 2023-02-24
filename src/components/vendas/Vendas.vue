@@ -8,9 +8,7 @@
            background-size: 100%; 
           "
     v-bind:style="{ 'background-image': 'url(' + store.imagemAmbiente + ')' }"
-    >
-
-  
+    > 
    
     <div style="padding: 15px; width: 300px; position: relative;">
     
@@ -129,7 +127,7 @@
               >
             
             <div>
-              {{ primeiraLetraMaiuscula30(c.DESCRICAO) }}
+              {{ primeiraLetraMaiuscula30(c.NOMENCLATURA) }}
             </div>
 
             <div style="padding: 5px 7px 0px 0px; font-size: 12px;  font-weight: bold; ">
@@ -158,16 +156,16 @@
               style="display: flex; justify-content: space-between; padding-right: 15px;"                 
               v-for="(d, indexD) in store.dadosItensFiltro.filter(x => x.AMBIENTE==a && x.TIPO==b.TIPO)" 
               :key="indexD"
-              :value="d.DESCRICAO"  
+              :value="d.NOMENCLATURA"  
               @click="incluiItem(d)"
               >
                     
             <div>
-            {{  primeiraLetraMaiuscula(d.DESCRICAO) }} 
+            {{  primeiraLetraMaiuscula(d.NOMENCLATURA) }} 
             </div>                   
             
             <div>
-              R$ {{ formataDinheiro(d.VALOR || 0) }}
+              R$ {{ formataDinheiro(d.PRECO_TOTAL || 0) }}
             </div>
             
 
@@ -264,11 +262,8 @@
     import { useMeta } from '@/composables/use-meta'; 
     import jsPDF from 'jspdf';
     import 'jspdf-autotable';
-    import itens from './itens.js'
-    import itensTipo from './itensTipo.js'
-    import imagens from './imagens.js'
-
-    console.log(imagens)
+    
+ 
  
    
     const store = indexStore(); 
@@ -279,11 +274,13 @@
     
     async function getItens() {
     
-    //var result = await axios.get('./http://34.172.134.46:4040/itens') 
+    var result = await axios.get('http://localhost:5050/itens') 
     
+     console.log(result.data.filter(x => x.AMBIENTE=='COZINHA'))
      
-    store.dadosItens = itens
-    store.dadosItensFiltro = itens
+
+    store.dadosItens = result.data
+    store.dadosItensFiltro = result.data
     
     store.dadosItens.forEach(i => {    
         arrayAmbiente.push (i.AMBIENTE)      
@@ -328,10 +325,10 @@
 
     async function getItensTipo() {
     
-    //var result = await axios.get('http://34.172.134.46:4040/itensTipo') 
+    var result = await axios.get('http://localhost:5050/itenstipo') 
     
-     
-    store.itensTipo = itensTipo
+     console.log(result)
+    store.itensTipo = result.data
      
     } 
     getItensTipo()
@@ -387,7 +384,7 @@
       var sum = 0; 
 
       for(var i =0;i<arr.length;i++){ 
-        sum+=arr[i].VALOR; 
+        sum+=arr[i].PRECO_TOTAL; 
       } 
       
       return formataDinheiro(sum)
@@ -403,7 +400,7 @@ function totalGeral () {
     var sum = 0; 
   
     for(var i =0;i<arr.length;i++){ 
-      sum+=arr[i].VALOR; 
+      sum+=arr[i].PRECO_TOTAL; 
     } 
 
     return formataDinheiro(sum)
@@ -440,8 +437,8 @@ function incluiItem(item) {
 } 
 
 async function getImagens() {
-    //  var result = await axios.get('http://34.172.134.46:4040/imagens')      
-     store.imagens = imagens      
+     var result = await axios.get('localhost:5050/imagens')      
+     store.imagens = result.data 
     }
     
 getImagens()
@@ -462,8 +459,21 @@ function selecionarImagem(ambiente){
   })
   return result
 }
+
+
+function removeAcento (text)
+{       
+    text = text.toLowerCase();                                                         
+    text = text.replace(new RegExp('[ÁÀÂÃ]','gi'), 'a');
+    text = text.replace(new RegExp('[ÉÈÊ]','gi'), 'e');
+    text = text.replace(new RegExp('[ÍÌÎ]','gi'), 'i');
+    text = text.replace(new RegExp('[ÓÒÔÕ]','gi'), 'o');
+    text = text.replace(new RegExp('[ÚÙÛ]','gi'), 'u');
+    text = text.replace(new RegExp('[Ç]','gi'), 'c');
+    return text;                 
+}
  
-const columns = ref(['TIPO', 'DESCRICAO', 'VALOR']); 
+const columns = ref(['TIPO', 'DESCRICAO', 'PRECO_TOTAL']); 
 
 const capitalize = (text) => {
         return text
