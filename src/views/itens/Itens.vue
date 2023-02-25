@@ -16,8 +16,9 @@
         </teleport>
 
      
+        <button @click="store.editando = true; store.cadastroProduto.ID=0" type="" class="btn btn-primary mt-3">Novo</button>
+        <div v-if="store.editando">
         
-        <div>
             <div class="row layout-top-spacing"
                            > 
                      
@@ -31,7 +32,7 @@
                         </div>   
                     </div>
                     <div class="panel-body">
-                        <form > 
+                        <div > 
                         
                             <div class="row">
                                 <div class="form-group col-md-2">
@@ -49,7 +50,7 @@
                                 <div class="form-group col-md-8">
                                     <label class="col-form-label pt-0" for="password">NOMENCLATURA</label>
                                     <div>
-                                        <input :value="store.cadastroProduto.NOMENCLATURA"  type="text" id="NOMENCLATURA" class="form-control" placeholder="NOMENCLATURA" />
+                                        <input v-model="store.cadastroProduto.NOMENCLATURA"  type="text" id="NOMENCLATURA" class="form-control" placeholder="NOMENCLATURA" />
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +58,7 @@
                                 <div class="form-group col-md-12">
                                     <label class="col-form-label pt-0" for="email">Descrição</label>
                                     <div>
-                                        <input  :value="store.cadastroProduto.DESCRICAO" type="text" id="DESCRICAO" class="form-control" placeholder="Descrição" />
+                                        <input  v-model="store.cadastroProduto.DESCRICAO" type="text" id="DESCRICAO" class="form-control" placeholder="Descrição" />
                                     </div>
                                 </div>                           
                             </div>
@@ -65,31 +66,31 @@
                                 <div class="form-group col-md-4">
                                     <label class="col-form-label pt-0" for="email">FORNECEDOR</label>
                                     <div>
-                                        <input :value="store.cadastroProduto.FORNECEDOR"  type="text" id="FORNECEDOR" class="form-control" placeholder="FORNECEDOR" />
+                                        <input v-model="store.cadastroProduto.FORNECEDOR"  type="text" id="FORNECEDOR" class="form-control" placeholder="FORNECEDOR" />
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label class="col-form-label pt-0" for="password">UND</label>
                                     <div>
-                                        <input :value="store.cadastroProduto.UND"  type="text" id="UND" class="form-control" placeholder="UND" />
+                                        <input v-model="store.cadastroProduto.UND"  type="text" id="UND" class="form-control" placeholder="UND" />
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label class="col-form-label pt-0" for="password">QTDE</label>
                                     <div>
-                                        <input :value="store.cadastroProduto.QTDE"  type="text" id="QTDE" class="form-control" placeholder="QTDE" />
+                                        <input v-model="store.cadastroProduto.QTDE"  type="text" id="QTDE" class="form-control" placeholder="QTDE" />
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label class="col-form-label pt-0" for="password">VLR_UNITARIO</label>
                                     <div>
-                                        <input :value="store.cadastroProduto.VLR_UNITARIO"  type="text" id="VLR_UNITARIO" class="form-control" placeholder="VLR_UNITARIO" />
+                                        <input v-model="store.cadastroProduto.VLR_UNITARIO"  type="text" id="VLR_UNITARIO" class="form-control" placeholder="VLR_UNITARIO" />
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label class="col-form-label pt-0" for="password">FRETE</label>
                                     <div>
-                                        <input :value="store.cadastroProduto.FRETE" type="text" id="FRETE" class="form-control" placeholder="FRETE" />
+                                        <input v-model="store.cadastroProduto.FRETE" type="text" id="FRETE" class="form-control" placeholder="FRETE" />
                                     </div>
                                 </div>
                             </div>
@@ -97,31 +98,31 @@
                                 <div class="form-group col-md-2">
                                     <label class="col-form-label pt-0" for="email">Mão de Obra</label>
                                     <div>
-                                        <input :value="store.cadastroProduto.VLR_MAO_OBRA"  type="text" id="VLR_MAO_OBRA" class="form-control" placeholder="Mão de Obra" />
+                                        <input v-model="store.cadastroProduto.VLR_MAO_OBRA"  type="text" id="VLR_MAO_OBRA" class="form-control" placeholder="Mão de Obra" />
                                     </div>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label class="col-form-label pt-0" for="password">Contingência</label>
                                     <div>
-                                        <input :value="store.cadastroProduto.CONTINGENCIA"  type="" id="CONTINGENCIA" class="form-control" placeholder="Contingência" />
+                                        <input v-model="store.cadastroProduto.CONTINGENCIA"  type="" id="CONTINGENCIA" class="form-control" placeholder="Contingência" />
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label class="col-form-label pt-0" for="password">Opção</label>
                                     <div>
-                                        <input :value="store.cadastroProduto.OPCAO" type="text" id="OPCAO" class="form-control" placeholder="Opção" />
+                                        <input v-model="store.cadastroProduto.OPCAO" type="text" id="OPCAO" class="form-control" placeholder="Opção" />
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label class="col-form-label pt-0" for="password">Taxa</label>
                                     <div>
-                                        <input :value="store.cadastroProduto.TAXA"  type="text" id="TAXA" class="form-control" placeholder="Taxa" />
+                                        <input v-model="store.cadastroProduto.TAXA"  type="text" id="TAXA" class="form-control" placeholder="Taxa" />
                                     </div>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label class="col-form-label pt-0" for="password">Preço Total</label>
                                     <div>
-                                        <input :value="store.cadastroProduto.PRECO_TOTAL"  type="text" id="PRECO_TOTAL" class="form-control" placeholder="Preço Total" />
+                                        <input v-model="store.cadastroProduto.PRECO_TOTAL"  type="text" id="PRECO_TOTAL" class="form-control" placeholder="Preço Total" />
                                     </div>
                                 </div>
                             </div>
@@ -145,9 +146,9 @@
 
                         
 
-                            <button @click="editItem(item.ID)" type="" class="btn btn-primary mt-3">Alterar</button>
-                            <button @click="createItem()" type="" class="btn btn-primary mt-3">Cadastrar</button>
-                        </form>
+                            <button @click="confirmar(store.cadastroProduto.ID)" type="" class="btn btn-primary mt-3">CONFIRMAR</button>
+                      
+                        </div>
                     </div>
                 </div>
             </div>
@@ -156,32 +157,9 @@
         </div>
         </div>
 
+ 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
         
@@ -191,7 +169,7 @@
               
                 <div class="panel br-6 p-0 mt-5">
                     <div class="custom-table">
-                        <v-client-table :data="items1" :columns="columns1" :options="table_option1">
+                        <v-client-table :data="store.itensCadastro" :columns="columns1" :options="table_option1">
                             <template #progress="props">
                                 <div class="progress">
                                     <div
@@ -264,8 +242,8 @@
  
 
     //table 2
-    const columns1 = ref(['actions','ID', 'AMBIENTE', 'TIPO', 'NOMENCLATURA', 'VLR_UNITARIO']);
-    const items1 = ref([]);
+    const columns1 = ref(['actions','ID', 'AMBIENTE', 'TIPO', 'NOMENCLATURA', 'OPCAO','FORNECEDOR','VLR_UNITARIO']);
+    const items1 = store.itensCadastro;
     const table_option1 = ref({
         perPage: 10,
         perPageValues: [5, 10, 20, 50],
@@ -293,11 +271,13 @@
     });
 
     const bind_data = async  () => {
-
+        store.itensCadastro = []
        var result = await axios.get(store.baseApiHTTPS+'/itens') 
+      
     
         //table 2
-        items1.value =  result.data
+        console.log(result.data)
+        store.itensCadastro =  result.data
 
     }
     //table 2
@@ -307,14 +287,33 @@
 
     function selectItemEdit (props) {
         store.editando = true
-        store.itemEdit.push(props)
+        console.log(props)
+        store.cadastroProduto.ID = props.ID,
+        store.cadastroProduto.AMBIENTE = props.AMBIENTE,
+        store.cadastroProduto.TIPO = props.TIPO, 
+        store.cadastroProduto.OPCAO = props.OPCAO, 
+        store.cadastroProduto.NOMENCLATURA = props.NOMENCLATURA, 
+        store.cadastroProduto.FORNECEDOR = props.FORNECEDOR, 
+        store.cadastroProduto.DESCRICAO = props.DESCRICAO, 
+        store.cadastroProduto.UND = props.UND,
+        store.cadastroProduto.QTDE = props.QTDE, 
+        store.cadastroProduto.VLR_UNITARIO = props.VLR_UNITARIO, 
+        store.cadastroProduto.FRETE = props.FRETE, 
+        store.cadastroProduto.VLR_MAO_OBRA = props.VLR_MAO_OBRA, 
+        store.cadastroProduto.CONTINGENCIA = props.CONTINGENCIA,
+        store.cadastroProduto.CUSTO_TOTAL = props.CUSTO_TOTAL,
+        store.cadastroProduto.TAXA = props.TAXA,
+        store.cadastroProduto.PRECO_TOTAL = props.PRECO_TOTAL,
+        store.cadastroProduto.LUCRO = props.LUCRO
     }
 
 
-    function editItem(id, ambiente){        
-   
+    function editItem(id){        
+        console.log('Editando Item ID: '+id)
+        console.log('NOMENCLATURA '+ store.cadastroProduto.NOMENCLATURA)
+        
     var data = 
-         { "ID": id, 
+    JSON.stringify ( { "ID": id, 
          "AMBIENTE":   store.cadastroProduto.AMBIENTE     , 
          "TIPO": store.cadastroProduto.TIPO, 
          "OPCAO": store.cadastroProduto.OPCAO, 
@@ -330,8 +329,9 @@
           "CUSTO_TOTAL": store.cadastroProduto.CUSTO_TOTAL,
            "TAXA": store.cadastroProduto.TAXA,
             "PRECO_TOTAL":store.cadastroProduto.PRECO_TOTAL,
-             "LUCRO": store.cadastroProduto.LUCRO} 
-    
+             "LUCRO": store.cadastroProduto.LUCRO
+            } 
+             )
 
     var config = {
         method: 'put',
@@ -346,6 +346,7 @@
         axios(config)
         .then(function (response) {
         console.log(JSON.stringify(response.data));
+        bind_data()
         })
         .catch(function (error) {
         console.log(error);
@@ -354,9 +355,11 @@
  }
 
  function createItem(){
- console.log(store.cadastroProduto)
- var data = 
-         { "ID": id, 
+    console.log('Cadastrando Novo Item')
+    var axios = require('axios');
+    console.log(store.cadastroProduto.AMBIENTE)
+var data = JSON.stringify( 
+    { 
          "AMBIENTE":   store.cadastroProduto.AMBIENTE     , 
          "TIPO": store.cadastroProduto.TIPO, 
          "OPCAO": store.cadastroProduto.OPCAO, 
@@ -372,26 +375,43 @@
           "CUSTO_TOTAL": store.cadastroProduto.CUSTO_TOTAL,
            "TAXA": store.cadastroProduto.TAXA,
             "PRECO_TOTAL":store.cadastroProduto.PRECO_TOTAL,
-             "LUCRO": store.cadastroProduto.LUCRO} 
+             "LUCRO": store.cadastroProduto.LUCRO
+            } 
+ );
 
-                var config = {
-                method: 'post',
-                maxBodyLength: Infinity,
-                url: 'https://json-replace-oracle-production.up.railway.app/itens',
-                headers: { 
-                    'Content-Type': 'application/json'
-                },
-                data : data
-                };
+var config = {
+  method: 'post',
+maxBodyLength: Infinity,
+  url: 'https://json-replace-oracle-production.up.railway.app/itens',
+  headers: { 
+    'Content-Type': 'application/json'
+  },
+  data : data
+};
 
-                axios(config)
-                .then(function (response) {
-                console.log(JSON.stringify(response.data));
-                })
-                .catch(function (error) {
-                console.log(error);
-                });
+axios(config)
+.then(function (response) {
+  console.log(JSON.stringify(response.data));
+  bind_data()
+})
+.catch(function (error) {
+  console.log(error);
+});
 
+ }
+
+ function confirmar (id) {
+    console.log('Valor do ID: ' + id)
+    if (id > 0) {
+        editItem(id)
+    }else{
+        createItem()
+    }
+    store.editando = false
+    store.cadastroProduto.ID=0
+    
+     
+    
  }
 
  function deleteItem(props){
@@ -411,6 +431,7 @@
                 axios(config)
                 .then(function (response) {
                 console.log(JSON.stringify(response.data));
+                bind_data()
                 })
                 .catch(function (error) {
                 console.log(error);

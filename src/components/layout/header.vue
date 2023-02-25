@@ -173,7 +173,7 @@
                                 <a role="menuitem" href="#" target="_self" class="dropdown-item">
                                     <div class="media media">
                                         <div class="media-aside align-self-start">
-                                            <img src="@/assets/images/profile-15.jpeg" alt="avatar" />
+                                            <img src="" alt="avatar" />
                                         </div>
                                         <div class="media-body">
                                             <h5 class="usr-name">Daisy Anderson</h5>
@@ -368,7 +368,7 @@
 
                     <div class="dropdown nav-item user-profile-dropdown btn-group">
                         <a href="javascript:;" id="ddluser" data-bs-toggle="dropdown" aria-expanded="false" class="btn dropdown-toggle btn-icon-only user nav-link">
-                            <img src="@/assets/images/profile-16.jpeg" alt="avatar" />
+                            <img src="" alt="avatar" />
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="ddluser">
                             <li role="presentation">

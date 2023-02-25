@@ -38,26 +38,26 @@ export const indexStore = defineStore("rotas", () =>{
 
     const imagens = []
 
-    const itemEdit = []
+    const itensCadastro = []
 
     const cadastroProduto = {
-        AMBIENTE: null,
-        TIPO: null,
-        TIPO: null, 
-        OPCAO: null, 
-        NOMENCLATURA: null, 
-        FORNECEDOR: null, 
-        DESCRICAO: null, 
-        UND: null,
-        QTDE: null, 
-        VLR_UNITARIO: null, 
-         FRETE: null, 
-         VLR_MAO_OBRA: null, 
-         CONTINGENCIA: null,
-         CUSTO_TOTAL: null,
-         TAXA: null,
-         PRECO_TOTAL: null,
-         LUCRO: null
+        ID: 0,
+        AMBIENTE: 0,
+        TIPO: 0, 
+        OPCAO: 0, 
+        NOMENCLATURA: 0, 
+        FORNECEDOR: 0, 
+        DESCRICAO: 0, 
+        UND: 0,
+        QTDE: 0, 
+        VLR_UNITARIO: 0, 
+         FRETE: 0, 
+         VLR_MAO_OBRA: 0, 
+         CONTINGENCIA: 0,
+         CUSTO_TOTAL: 0,
+         TAXA: 0,
+         PRECO_TOTAL: 0,
+         LUCRO: 0
         } 
     
     
@@ -76,7 +76,7 @@ export const indexStore = defineStore("rotas", () =>{
         ilhaBalcao,
         dadosItensFiltro,
         baseApiHTTPS,
-        itemEdit,
+        itensCadastro,
         cadastroProduto
     }
 });
