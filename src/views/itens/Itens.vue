@@ -171,7 +171,7 @@
                 var config = {
                 method: 'post',
                 maxBodyLength: Infinity,
-                url: 'http://35.226.231.200:4040/itens',
+                url: 'https://63f9bb7fe9911e0008ceeb5c--melodious-stardust-963489.netlify.app/itens',
                 headers: { 
                     'Content-Type': 'application/json'
                 },
