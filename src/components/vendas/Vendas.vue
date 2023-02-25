@@ -11,14 +11,33 @@
    
     <div style="padding: 15px; width: 300px; position: relative;">
     
-        <h2 style="color: black; font-size: 24px; margin-left: 15px;   ">Resumo do Pedido</h2> 
+        <h2 style="color: black; font-size: 27px; margin-left: 5px; font-weight: bold;">Resumo do Pedido</h2> 
 
         <input style="padding: 5px; 
                 font-size: 18px;
                 background-color: #000000DD;
                 color: white;
                 width: 265px;
-                border-radius: 10px;" type="text" placeholder="Nome do Cliente" v-model="store.nomeCliente">     
+                border-radius: 10px;" type="text" placeholder="Nome do Cliente" v-model="store.nomeCliente">   
+
+                <div style="display: flex; padding: 5px 0px 0px 0px;">
+                  <input style="padding: 5px; 
+                                font-size: 18px;
+                                background-color: #000000DD;
+                                color: white;
+                                width: 170px;
+                                border-radius: 10px;" type="text" placeholder="CPF/CNPJ" v-model="store.cpfCnpjCliente">    
+
+                                <input style="padding: 5px; 
+                                margin-left: 4px;
+                                font-size: 18px;
+                                background-color: #000000DD;
+                                color: white;
+                                width: 90px;
+                                border-radius: 10px;" type="text" placeholder="Casa" v-model="store.numeroCasa">  
+                </div>
+
+    
     
     <div  
             style="padding: 10px;
@@ -248,7 +267,7 @@
     
     
     
-    </template>
+</template>
     
 <script setup>
     
@@ -294,13 +313,9 @@
         for (i = 0; e = this[i]; i++) {o[e] = 1};
         for (e in o) {a.push (e)};   
         return a;  
-       }     
-    
+       }         
     store.ambiente=arrayAmbiente.getUnique()
-     
-    
-    } 
-    
+    }     
     getItens()
 
 
@@ -359,10 +374,8 @@
           return (minusculo.substring(0,50)+'...').replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase())
           }else{
             return (minusculo.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase()))
-          }
-    
-    }
-   
+          }    
+    }   
    }
 
    function formataDinheiro(item) {
