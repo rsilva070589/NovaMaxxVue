@@ -1,11 +1,10 @@
 <template>
  
- 
     <div  
-    style="background-attachment: fixed;
-           width: 100%            
-           font-family: Roboto, serif;
+    style="
+           background-attachment: fixed;                               
            background-size: 100%; 
+           background-position: center;           
           "
     v-bind:style="{ 'background-image': 'url(' + store.imagemAmbiente + ')' }"
     > 
@@ -36,7 +35,8 @@
                           cursor: pointer;
                         
   " 
-       @click="store.AmbienteOpen = a; 
+       @click="AmbienteOpenClose(a);
+                        store.AmbienteOpen = a;                         
                          selecionarImagem(store.AmbienteOpen); 
                          store.dadosItensFiltro = store.dadosItens; 
                          store.ilhaBalcao=null "
@@ -48,7 +48,7 @@
   
   </div>
 
-  <div v-if="store.AmbienteOpen == a  "> 
+  <div v-if="store.AmbienteOpen == a  && store.AmbienteOpenClose"> 
 
 <div style="display: flex; justify-content: center;  margin: 10px 0px 0px 15px; "
         @click=""
@@ -98,7 +98,7 @@
                       justify-content: space-between;
                       
                        "                     
-               @click="store.BoxOpen = a+'-'+b.TIPO" 
+               @click="store.BoxOpen = a+'-'+b.TIPO;" 
                     >
                 <div>
                   Selecione
@@ -109,7 +109,9 @@
                 
         </div>  
 
-        <div  v-for="(c, indexC) in store.itensSelecao.filter(x=>  x.AMBIENTE ==a 
+        <div  
+               
+                v-for="(c, indexC) in store.itensSelecao.filter(x=>  x.AMBIENTE ==a 
                                                                 && x.TIPO     ==b.TIPO 
                                                                         )" 
               :key="indexC"                                                              
@@ -153,7 +155,7 @@
              >
  
             <div class="itemSelect"
-              style="display: flex; justify-content: space-between; padding-right: 15px;"                 
+              style="display: flex; justify-content: space-between; padding-right: 10px;"                 
               v-for="(d, indexD) in store.dadosItensFiltro.filter(x => x.AMBIENTE==a && x.TIPO==b.TIPO)" 
               :key="indexD"
               :value="d.NOMENCLATURA"  
@@ -353,8 +355,8 @@
         return null
     }else{
         var minusculo = minhaFrase.toLowerCase()
-        if(minusculo.length>65){
-          return (minusculo.substring(0,65)+'...').replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase())
+        if(minusculo.length>50){
+          return (minusculo.substring(0,50)+'...').replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase())
           }else{
             return (minusculo.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase()))
           }
@@ -581,6 +583,23 @@ const export_table = (type) => {
             doc.save(filename + '.pdf');
         }
     };
+
+    function AmbienteOpenClose(a) {
+      
+      if (store.AmbienteOpenClose ) {
+        store.AmbienteOpenClose = false
+      }else{
+        store.AmbienteOpenClose = true        
+      }
+    }
+
+    function BoxOpenClose() {
+      if (store.BoxOpenClose) {
+        store.BoxOpenClose = false
+      }else{
+        store.BoxOpenClose = true
+      }
+    }
  
      
 
@@ -658,7 +677,7 @@ const export_table = (type) => {
     flex-direction: row;
     /* justify-content: center; */
     align-items: center;
-    width: 700px;
+    width: 450px;
     overflow-x: auto;
 }
  
