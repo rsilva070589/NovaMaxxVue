@@ -171,7 +171,7 @@
                 var config = {
                 method: 'post',
                 maxBodyLength: Infinity,
-                url: 'https://63f9bb7fe9911e0008ceeb5c--melodious-stardust-963489.netlify.app/itens',
+                url: 'https://json-replace-oracle-production.up.railway.app/itens',
                 headers: { 
                     'Content-Type': 'application/json'
                 },
