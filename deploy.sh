@@ -1,5 +1,6 @@
 
- 
+ yarn build
+
 git init 
 
 git config --global user.email "rsilva070589@gmail.com"
