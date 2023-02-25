@@ -270,7 +270,6 @@
     
     const arrayAmbiente = []
 
- 
     
     async function getItens() {
     
