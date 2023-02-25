@@ -66,7 +66,7 @@
                                         <li>
                                             <a href="javascript:void(0);" class="dropdown-item" @click="view_row1(props.row)"> view </a>
                                         </li>
-                                        <li @click="editItem(props.row)">
+                                        <li @click="createItem(props.row)">
                                             <a href="javascript:void(0);" class="dropdown-item"> Edit </a>
                                         </li>
                                         <li>
@@ -147,7 +147,7 @@
     var config = {
         method: 'put',
         maxBodyLength: Infinity,
-        url: '35.226.231.200:4040/itens/'+props.id,
+        url: 'http://35.226.231.200:4040/itens/'+props.id,
         headers: { 
             'Content-Type': 'application/json'
         },
