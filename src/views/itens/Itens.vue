@@ -16,7 +16,7 @@
         </teleport>
 
      
-        <button @click="store.editando = true; store.cadastroProduto.ID=0" type="" class="btn btn-primary mt-3">Novo</button>
+        <button @click="store.editando = true; store.cadastroProduto = [];store.cadastroProduto.ID=0" type="" class="btn btn-primary mt-3">Novo</button>
         <div v-if="store.editando">
         
             <div class="row layout-top-spacing"
@@ -415,6 +415,8 @@ axios(config)
  }
 
  function deleteItem(props){
+    store.editando = false
+    store.cadastroProduto.ID=0
     
     var data =   {"ID" : props.ID}  
 
