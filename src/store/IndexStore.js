@@ -7,7 +7,7 @@ export const indexStore = defineStore("rotas", () =>{
     }); 
 
    const baseApiHTTPS  = 'https://json-replace-oracle-production.up.railway.app'
-  // const baseApiHTTPS  = 'localhost:5050'
+   //const baseApiHTTPS  = 'http://localhost:5050'
 
     const dadosItens = []
 
@@ -38,6 +38,7 @@ export const indexStore = defineStore("rotas", () =>{
 
     const imagens = []
 
+    const itemEdit = {}
     
     
     return {
@@ -53,7 +54,8 @@ export const indexStore = defineStore("rotas", () =>{
         imagens,
         ilhaBalcao,
         dadosItensFiltro,
-        baseApiHTTPS
+        baseApiHTTPS,
+        itemEdit
     }
 });
 
