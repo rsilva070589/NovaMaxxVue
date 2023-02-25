@@ -55,16 +55,7 @@
                             </router-link>
                         </li>
                         -->
-                        <li>
-                            <router-link to="/ambiente" @click="toggleMobileMenu">
-                                {{ $t('Ambiente') }}
-                            </router-link>
-                        </li>
-                        <li>
-                            <router-link to="/opcoes" @click="toggleMobileMenu">
-                                {{ $t('Opcoes') }}
-                            </router-link>
-                        </li>
+                       
                         <li>
                             <router-link to="/itens" @click="toggleMobileMenu">
                                 {{ $t('Itens') }}
