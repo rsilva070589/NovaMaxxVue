@@ -8,7 +8,7 @@
           "
     v-bind:style="{ 'background-image': 'url(' + store.imagemAmbiente + ')' }"
     > 
-   
+     
     <div style="padding: 15px; width: 300px; position: relative;">
     
         <h2 style="color: black; font-size: 27px; margin-left: 5px; font-weight: bold;">Resumo do Pedido</h2> 
@@ -244,7 +244,7 @@
                           border-radius: 10px; 
                           text-align: center;                                               
                           "
-                     @click="export_table('pdf')"
+                     @click="export_table('pdf'); savePedido()"
                           >
                 FECHAR PEDIDO
               </div>
@@ -296,9 +296,6 @@
     
     var result = await axios.get(store.baseApiHTTPS+'/itens') 
     
-     console.log(result.data.filter(x => x.AMBIENTE=='COZINHA'))
-     
-
     store.dadosItens = result.data
     store.dadosItensFiltro = result.data
     
@@ -319,8 +316,7 @@
     getItens()
 
 
-    function dadosFiltro(ambiente, tipo, opcional) {
-      console.log('funcao dadosFiltro()' + store.ilhaBalcao+ambiente)
+    function dadosFiltro(ambiente, tipo, opcional) { 
       store.dadosItensFiltro = store.dadosItens
 
 
@@ -342,8 +338,7 @@
     async function getItensTipo() {
     
     var result = await axios.get(store.baseApiHTTPS+'/itenstipo') 
-    
-     console.log(result)
+     
     store.itensTipo = result.data
      
     } 
@@ -458,8 +453,7 @@ async function getImagens() {
 getImagens()
 
 
-function selecionarImagem(ambiente){
-  console.log(ambiente)
+function selecionarImagem(ambiente){ 
   var result = store.imagens.filter(x=> x.AMBIENTE==ambiente) 
   result.map(a=> {
     if(store.ilhaBalcao == 'ILHA')
@@ -575,8 +569,7 @@ const export_table = (type) => {
             const arrayHead = []
 
             store.ambiente.map( x => {   
-              arrayHead.push()
-              console.log(cols)
+              arrayHead.push() 
               doc.autoTable({           
                 headStyles: { fillColor: '#eff5ff', textColor: '#515365', fontsize: 40 },
                 head: [{TIPO: x}],
@@ -591,8 +584,7 @@ const export_table = (type) => {
             });          
             }) 
 
-            console.log(arrayHead)
-           
+      
             doc.save(filename + '.pdf');
         }
     };
@@ -612,6 +604,50 @@ const export_table = (type) => {
       }else{
         store.BoxOpenClose = true
       }
+    }
+
+    function savePedido(){
+
+    const arrayItensPedido = []
+
+
+    store.itensSelecao.map(x => 
+    
+    arrayItensPedido.push({
+                        "COD_ITEM": x.ID,
+                        "VALOR"   : x.PRECO_TOTAL,
+                        "DESCONTO": 0
+                        })
+    )
+      
+      var data = JSON.stringify({
+        "NOME": store.nomeCliente,
+        "COD_CLIENTE": store.cpfCnpjCliente,
+        "EMPREENDIMENTO": "COMDOMINIO PADRAO",
+        "CASA": store.numeroCasa,
+        "VALOR": totalGeral(),
+        "DESCONTO": 0,
+        "ITENS": arrayItensPedido.filter(x => x.COD_ITEM > 0)
+      });
+
+       var config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://json-replace-oracle-production.up.railway.app/pedidos',
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+        data : data
+      };
+
+      axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
     }
  
      
