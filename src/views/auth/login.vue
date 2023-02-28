@@ -1,19 +1,22 @@
 <template>
-    <div class="form full-form auth-cover">
+    <div class="form full-form auth-cover" >
         <div class="form-container">
-            <div class="form-form">
-                <div class="form-form-wrap">
-                    <div class="form-container">
-                        <div class="form-content">
-                            <h1 class="">
-                                Log In to <router-link to="/"><span class="brand-name">CORK</span></router-link>
+            <div class="form-form" style="  margin-top: 50px;
+                                            margin-left: 300px; 
+                                            position: fixed;                                            
+                                             ">
+                <div class="form-form-wrap" style="" >
+                    <div class="form-content" >
+                            <h1 style="display: flex; justify-content: center;">
+                                 <router-link to="https://novamaxxempreendimentos.com.br"><span class="brand-name">   NewMaxx</span></router-link>
                             </h1>
-                            <p class="signup-link">New Here? <router-link to="/auth/register">Create an account</router-link></p>
+                            
+                            
                             <form class="text-start">
                                 <div class="form">
                                     <div id="username-field" class="field-wrapper input">
                                         <svg
-                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns="https://novamaxxempreendimentos.com.br/wp-content/uploads/2022/10/Ativo-3@4x.png"
                                             width="24"
                                             height="24"
                                             viewBox="0 0 24 24"
@@ -32,7 +35,7 @@
 
                                     <div id="password-field" class="field-wrapper input mb-2">
                                         <svg
-                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns="https://novamaxxempreendimentos.com.br/wp-content/uploads/2022/10/Ativo-3@4x.png"
                                             width="24"
                                             height="24"
                                             viewBox="0 0 24 24"
@@ -57,40 +60,121 @@
                                             </label>
                                         </div>
                                         <div class="field-wrapper">
-                                            <button type="submit" class="btn btn-primary">Log In</button>
+                                            <router-link to="/"><span class="brand-name">   <button type="submit" class="btn btn-primary">Log In</button></span></router-link>
+
                                         </div>
                                     </div>
 
-                                    <div class="field-wrapper text-center keep-logged-in">
-                                        <div class="checkbox-outline-primary custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" value="true" id="chkRemember" />
-                                            <label class="custom-control-label" for="chkRemember">Keep me logged in</label>
+                                    <div   style="display: inline-flex;
+                                                  padding: 10px;
+                                                  background-color: dodgerblue;                                                  
+                                                  border-radius: 10px;
+                                                  margin-top: 20px;
+                                                  margin-left: 60px;
+                                            " 
+                                           @click="signInWithGoogle" >
+                                        <div class="google-icon-wrapper">
+                                        <img class="google-icon" style="padding: 5px; background-color: white; "
+                                            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
                                         </div>
+                                        <span style="color: white; padding: 5px;">
+                                            Sign in with google
+                                        </span>
+                                    
                                     </div>
-
-                                    <div class="field-wrapper">
-                                        <router-link to="/auth/pass-recovery" class="forgot-pass-link">Forgot Password?</router-link>
-                                    </div>
+                                
+                                    
+ 
                                 </div>
                             </form>
-                            <p class="terms-conditions">
-                                © 2020 All Rights Reserved. <router-link to="/">CORK</router-link> is a product of Arrangic Solutions LLP. <a href="javascript:void(0);">Cookie Preferences</a>,
-                                <a href="javascript:void(0);">Privacy</a>, and <a href="javascript:void(0);">Terms</a>.
-                            </p>
+ 
                         </div>
-                    </div>
                 </div>
             </div>
-            <div class="form-image">
-                <div class="l-image"></div>
-            </div>
+       
         </div>
     </div>
 </template>
 
 <script setup>
-    import '@/assets/sass/authentication/auth.scss';
+  import '@/assets/sass/authentication/auth.scss';
 
-    import { useMeta } from '@/composables/use-meta';
-    useMeta({ title: 'Login Cover' });
+  import { useMeta } from '@/composables/use-meta';
+  useMeta({ title: 'Login Cover' });
+  import { signInWithEmailAndPassword, getAuth,GoogleAuthProvider,signInWithPopup } from "firebase/auth";
+  import { collection, Timestamp,  addDoc, where, doc, setDoc, deleteDoc, updateDoc, query, getDocs} from  'firebase/firestore'
+  import {db} from'@/firebase/firebase'
+  import { ref } from "vue"; 
+  import { useRouter } from "vue-router";
+  import { useUserStore } from "../../store/user"; 
+  const store = useUserStore();
+  const router = useRouter()
+  const email = ref(""); 
+  const password = ref("");
+  const errMsg = ref("");
+ 
+  const login = () => {
+      signInWithEmailAndPassword(getAuth(), email.value, password.value)
+        .then((data) => {
+          console.log("Sucess signed in")
+          console.log(getAuth().currentUser)
+          router.push("/todos")
+          store.user.email=(getAuth().currentUser?.email)    
+          store.user.photoUrlOri=(getAuth().currentUser)  
+
+        })
+        .catch((error) => {
+          console.log(error.code);
+          switch(error.code) {
+              case "auth/invalid-email":
+                errMsg.value ="invalid email";
+                break;
+              case "auth/user-not-found":
+                errMsg.value = "User not Found";
+                break;
+              case "auth/wrong-password":
+                errMsg.value = "Incorrect Password";
+                break;
+              default:
+                errMsg.value = "Email or Password was Incorrect";
+                break;
+          }
+          alert(error.message);
+        })        
+    }
+  const signInWithGoogle = () => {
+  const provider = new GoogleAuthProvider();  
+  signInWithPopup(getAuth(), provider)
+  .then((result) => {
+  //    console.log(result.user);
+ 
+       router.push({ 
+                path: '/',
+                 name: 'Vendas',
+                 params: { uid: getAuth().currentUser?.uid   }
+            });
+       
+      store.user.displayNameOri=(getAuth().currentUser?.displayName)
+      store.user.photoUrlOri=(getAuth().currentUser?.photoURL)
+      store.user.uidOri=(getAuth().currentUser?.uid)
+       store.user.emailOri=(getAuth().currentUser?.email)
+         async function novoUser() { 
+         await setDoc(doc(db, "USUARIOS", store.user.uidOri), {
+        uid:          store.user.uidOri,  
+        photoUrl:     store.user.photoUrlOri,
+        displayName:  store.user.displayNameOri,
+        email:        store.user.emailOri,
+        data:         Timestamp.now() 
+    })
+   }
+  novoUser()
+       
+    } 
+  )  
+  .catch((error) => {
+      return null
+  }) 
+  
+  }
+  
 </script>

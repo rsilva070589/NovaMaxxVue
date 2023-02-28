@@ -42,7 +42,7 @@
                                 </router-link>
                             </div>
                             <div class="text-center user-info">
-                                <img src="@/assets/images/profile-3.jpeg" alt="avatar" />
+                                <img src="" alt="avatar" />
                                 <p class="">Jimmy Turner</p>
                             </div>
                             <div class="user-info-list">

@@ -3,9 +3,11 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import { createPinia } from 'pinia'   
+import { db } from "./firebase/firebase";  
 const pinia = createPinia()
-const app = createApp(App);
+const app = createApp(App); 
 
+ 
 // bootstrap
 import * as bootstrap from 'bootstrap';
 window.bootstrap = bootstrap;
@@ -57,4 +59,4 @@ import appSetting from './app-setting';
 window.$appSetting = appSetting;
 window.$appSetting.init();
 
-app.use(PerfectScrollbar).use(pinia).use(store).use(router).use(i18n).use(PerfectScrollbar).use(VueNouislider).use(Maska).use(ClientTable).use(vue3JsonExcel).use(VueFormWizard).use(head).mount('#app');
+app.use(PerfectScrollbar).use(db).use(pinia).use(store).use(router).use(i18n).use(PerfectScrollbar).use(VueNouislider).use(Maska).use(ClientTable).use(vue3JsonExcel).use(VueFormWizard).use(head).mount('#app' );

@@ -1,7 +1,8 @@
 import { initializeApp } from "firebase/app"; 
 import { getFirestore  } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-  
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
+
 const firebaseConfig = {
   apiKey:'AIzaSyC1-sFFdJLKhtnK_YcLm3m6IHXv2JKVkr0',
   authDomain:'projetodev-176bd.firebaseapp.com',
@@ -20,3 +21,24 @@ export {
     db
 } 
  
+
+const auth = getAuth()
+
+export function useAuth() {
+  const user = ref(null)
+  const unsubscribe = auth.onAuthStateChanged(_user => (user.value = _user))
+  onUnmounted(unsubscribe)
+  const isLogin = computed(() => user.value !== null)
+
+  const signIn = async () => {
+    const googleProvider = new GoogleAuthProvider()
+    await signInWithPopup(getAuth(), googleProvider)
+    console.log(googleProvider);
+  }
+   
+  const signOut = () => { 
+        auth.signOut()
+        console.log("Fechando") 
+      }
+  return { user, isLogin, signIn, signOut } 
+}

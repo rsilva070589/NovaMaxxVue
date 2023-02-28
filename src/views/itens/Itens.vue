@@ -1,28 +1,15 @@
 <template>
-    <div class="layout-px-spacing">
-        <teleport to="#breadcrumb">
-            <ul class="navbar-nav flex-row">
-                <li>
-                    <div class="page-header">
-                        <nav class="breadcrumb-one" aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javascript:;">DataTables</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><span>Itens</span></li>
-                            </ol>
-                        </nav>
-                    </div>
-                </li>
-            </ul>
-        </teleport>
-
-     
-        <button @click="store.editando = true; store.cadastroProduto = [];store.cadastroProduto.ID=0" type="" class="btn btn-primary mt-3">Novo</button>
+    <div class="layout-px-spacing" style="margin-top: -100px;">
+        <h1 class="text-2xl font-medium mx-2" data-testid="statements-title-txt">Cadastro dos Itens</h1>
+        <div> 
+</div>
+        
         <div v-if="store.editando">
         
             <div class="row layout-top-spacing"
                            > 
                      
-          <div class="col-xl-12 col-lg-6 col-md-6 col-sm-12 col-12" style="margin-bottom: 24px">
+          <div class="col-xl-10 col-lg-6 col-md-6 col-sm-10 col-10" style="margin-bottom: 24px">
                 <div class="statbox panel box box-shadow">
                     <div class="panel-heading">
                         <div class="row">
@@ -156,20 +143,28 @@
              
         </div>
         </div>
-
  
+<div
+        v-if="!store.editando"
+         @click="store.editando = true; 
+                      store.cadastroProduto = [];
+                      store.cadastroProduto.ID=0">
 
- 
-
-
+    <svg version="1.1" id="Capa_1" width="30px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+        viewBox="0 0 50 50" xml:space="preserve">
+        <circle style="fill:#43B05C;" cx="25" cy="25" r="25"/>
+        <line style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="25" y1="13" x2="25" y2="38"/>
+        <line style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="37.5" y1="25" x2="12.5" y2="25"/>
+    </svg>
+</div>
         
-
-        <div class="">
+        <div v-if="!store.editando">
             <div  >
               
-                <div class="panel br-6 p-0 mt-5">
+                <div class="panel br-0 p-0 mt-0">
                     <div class="custom-table">
                         <v-client-table :data="store.itensCadastro" :columns="columns1" :options="table_option1">
+                        
                             <template #progress="props">
                                 <div class="progress">
                                     <div

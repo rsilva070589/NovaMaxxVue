@@ -25,6 +25,8 @@ export const indexStore = defineStore("rotas", () =>{
                                  ID_ITEM: null 
                         } ]
 
+    const usuarioLogado = false                
+
     const BoxOpen = null
 
     const AmbienteOpen = null
@@ -77,7 +79,8 @@ export const indexStore = defineStore("rotas", () =>{
         dadosItensFiltro,
         baseApiHTTPS,
         itensCadastro,
-        cadastroProduto
+        cadastroProduto,
+        usuarioLogado
     }
 });
 
