@@ -81,10 +81,7 @@
     const store = indexStore(); 
     const code_arr = ref([]);
     //table 1
-  
- 
-
- 
+   
 
     //table 2
     const columns1 = ref(['ID', 'DATA','NOME', 'COD_CLIENTE', 'CASA','EMPREENDIMENTO','STATUS','VALOR']);
