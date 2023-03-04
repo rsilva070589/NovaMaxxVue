@@ -197,7 +197,8 @@
     import { useMeta } from '@/composables/use-meta';
     useMeta({ title: 'Custom Table' });
     //table 1
-    const columns = ref(['id', 'first_name', 'last_name', 'email', 'phone', 'profile', 'status', 'actions']);
+     //table 1
+     const columns = ref(['id', 'first_name', 'last_name', 'email', 'phone', 'profile', 'status', 'actions']);
     const items = ref([]);
     const table_option = ref({
         headings: {

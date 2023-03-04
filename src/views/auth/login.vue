@@ -8,7 +8,7 @@
                 <div class="form-form-wrap" style="" >
                     <div class="form-content" >
                             <h1 style="display: flex; justify-content: center;">
-                                 <router-link to="https://novamaxxempreendimentos.com.br"><span class="brand-name">   NewMaxx</span></router-link>
+                                 <router-link to="https://novamaxxempreendimentos.com.br"><span class="brand-name">   NovaMaxx</span></router-link>
                             </h1>
                             
                             

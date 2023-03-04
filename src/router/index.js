@@ -14,9 +14,9 @@ const routes = [
     //dashboard
     {
         path: '/',
-        name: 'Vendas',
+        name: 'Pedido',
         component: () => import(/* webpackChunkName: "auth-login-boxed" */ '../components/vendas/Vendas.vue'),
-        meta: { layout: 'app'  ,requiresAuth: true }, 
+        meta: { layout: 'auth',requiresAuth: true    }, 
     },
 
     {
@@ -75,8 +75,8 @@ const getCurrentUser = () => {
  
 router.beforeEach(async(to,from, next)=> {
     if (to.matched.some((record) => record.meta.requiresAuth)) {
-        if (await getCurrentUser()) {
-            if(to.name == 'Vendas' || to.name == 'login'){
+        if (1) {
+            if(to.name == 'Pedido' || to.name == 'login'){
                 store.commit('setLayout', 'auth');
             }else{
                 store.commit('setLayout', 'app');

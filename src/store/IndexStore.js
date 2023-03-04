@@ -61,7 +61,8 @@ export const indexStore = defineStore("rotas", () =>{
          PRECO_TOTAL: 0,
          LUCRO: 0
         } 
-    
+
+
     
     
     return {
