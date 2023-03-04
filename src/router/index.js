@@ -30,7 +30,8 @@ const routes = [
         path: '/itens',
         name: 'itens',
         component: () => import(/* webpackChunkName: "index2" */ '../views/itens/Itens.vue'),
-        meta: { requiresAuth: true }, 
+       
+        meta: { layout: 'app' ,requiresAuth: true }
     },
 
     //auth
@@ -39,7 +40,7 @@ const routes = [
         path: '/login',
         name: 'login',
         component: () => import(/* webpackChunkName: "auth-login" */ '../views/auth/login.vue'),
-        meta: { layout: 'app' ,requiresAuth: true },
+        meta: { layout: 'auth'    }, 
     },
       
 ];
@@ -75,7 +76,8 @@ const getCurrentUser = () => {
  
 router.beforeEach(async(to,from, next)=> {
     if (to.matched.some((record) => record.meta.requiresAuth)) {
-        if (1) {
+      console.log(store.state.login)
+        if (store.state.login) {
             if(to.name == 'Pedido' || to.name == 'login'){
                 store.commit('setLayout', 'auth');
             }else{
@@ -84,6 +86,7 @@ router.beforeEach(async(to,from, next)=> {
          
           next();
         }else { 
+          console.log('passo aqui')
           store.commit('setLayout', 'auth');
           next("/login")
         }

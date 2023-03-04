@@ -227,7 +227,7 @@
     import { onMounted, ref } from 'vue';
     import axios from 'axios'
     import { useMeta } from '@/composables/use-meta';
-    useMeta({ title: 'Multiple Tables' });
+    useMeta({ title: 'Cadastro Itens' });
     const store = indexStore(); 
     const code_arr = ref([]);
     //table 1

@@ -143,11 +143,13 @@
     import { onMounted, ref } from 'vue';
     import { useStore } from 'vuex';
     import { useUserStore } from '../../store/user'
+    import { indexStore } from '../../store/IndexStore'
     import { getAuth,  signOut } from "@firebase/auth";  
     import { useRouter } from "vue-router";
     import router from "@/router";
     const store = useStore();
-   
+
+   const store1 = indexStore();
     const storeUser = useUserStore();
 
     const menu_collapse = ref('dashboard');
@@ -177,7 +179,9 @@
     };
 
     const handleSignOut = () => {
-        router.push("/login")
+        store.state.login = false
+        router.push("/")
+       
       console.log('deslogado')
     }   
 

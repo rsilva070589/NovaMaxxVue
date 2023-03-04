@@ -66,7 +66,7 @@
     import printer from './printer.vue'
     import pencil from './pencil.vue'
 import { async } from '@firebase/util';
-    useMeta({ title: 'Multiple Tables' });
+    useMeta({ title: 'Vendas' });
     const store = indexStore(); 
     const code_arr = ref([]);
  
@@ -141,7 +141,7 @@ import { async } from '@firebase/util';
        
  
         result.data.map(x => {
-
+console.log(x)
            
                 const item = {
                     Casa: x.CASA,
@@ -165,7 +165,7 @@ import { async } from '@firebase/util';
     }
     
 
-    useMeta({ title: 'Custom Table' });
+    useMeta({ title: 'Vendas' });
     //table 1
     
     const columns  = ref(['actions','ID', 'Data','Nome', 'CPF_CNPJ', 'Casa','Empreendimento','status','Valor']);

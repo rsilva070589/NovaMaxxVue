@@ -7,6 +7,8 @@
            background-position: center;     
             "
     >
+ 
+
     <div style="position: fixed; margin-left: 40%; margin-top: 8vh;">
 
         <div class="form-container" >
@@ -15,7 +17,10 @@
                     <div class="form-content" 
                         style="padding-top: 25vh;  "
                     >
-                            
+                    <div v-if="!store.state.login  &&  store1.loginErro">
+                        <h3 style="color: red;">login com erro!</h3>
+                    </div>
+                    
                             <form class="text-start">
                                 <div class="form">
                                     <div id="username-field" class="field-wrapper input">
@@ -34,7 +39,7 @@
                                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                             <circle cx="12" cy="7" r="4"></circle>
                                         </svg>
-                                        <input type="text" class="form-control" placeholder="Username" />
+                                        <input v-model="store1.login.usuario" type="text" class="form-control" placeholder="Username" />
                                     </div>
 
                                     <div id="password-field" class="field-wrapper input mb-2">
@@ -53,7 +58,7 @@
                                             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                                             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                                         </svg>
-                                        <input type="password" class="form-control" placeholder="Password" />
+                                        <input v-model="store1.login.senha" type="password" class="form-control" placeholder="Password" />
                                     </div>
                                     <div class="d-sm-flex justify-content-between">
                                         <div class="field-wrapper toggle-pass d-flex align-items-center">
@@ -63,9 +68,10 @@
                                                 <span class="slider round"></span>
                                             </label>
                                         </div>
-                                        <div class="field-wrapper">
+                                        <div class="field-wrapper" @click="Logar()">
                                             <router-link to="/"><span class="brand-name">   
-                                            <button type="submit" class="btn btn-primary">Entrar</button></span>
+                                            <button type="submit" class="btn btn-primary">Entrar</button>
+                                            </span>
                                             </router-link>
 
                                         </div>
@@ -91,11 +97,23 @@
   import '@/assets/sass/authentication/auth.scss';
   import { useRouter } from "vue-router"; 
   import { useMeta } from '@/composables/use-meta';
+  import {indexStore} from '../../store/IndexStore' 
   import store from '../../store';
-
-  const router = useRouter()
  
-  
+
+  const store1 = indexStore(); 
+  const router = useRouter()
+   
+ 
+ const Logar = () => {
+    if (store1.login.usuario='admin' && store1.login.senha == 'NovaMaxx@2023'){
+         store.state.login = true
+         router.push('/')
+    }else{
+        console.log('usuario e senha errados')
+        store1.loginErro=true
+    }
+ } 
  
  
  

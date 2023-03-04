@@ -65,6 +65,11 @@ export const indexStore = defineStore("rotas", () =>{
          LUCRO: 0
         } 
 
+        const login = {
+            usuario: null,
+            senha: null
+        }
+
 const reflesh = false
     
     
@@ -86,7 +91,8 @@ const reflesh = false
         cadastroProduto,
         usuarioLogado,
         reflesh,
-        itensVendas
+        itensVendas,
+        login
     }
 });
 

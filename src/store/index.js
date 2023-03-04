@@ -3,6 +3,7 @@ import i18n from '../i18n';
 
 export default new createStore({
     state: {
+        login: false,
         layout: 'app',
         is_show_sidebar: true,
         is_show_search: false,
@@ -12,24 +13,13 @@ export default new createStore({
         menu_style: 'vertical',
         layout_style: 'full',
         countryList: [
-            { code: 'zh', name: 'Chinese' },
-            { code: 'da', name: 'Danish' },
-            { code: 'en', name: 'English' },
-            { code: 'fr', name: 'French' },
-            { code: 'de', name: 'German' },
-            { code: 'el', name: 'Greek' },
-            { code: 'hu', name: 'Hungarian' },
-            { code: 'it', name: 'Italian' },
-            { code: 'ja', name: 'Japanese' },
-            { code: 'pl', name: 'Polish' },
-            { code: 'pt', name: 'Portuguese' },
-            { code: 'ru', name: 'Russian' },
-            { code: 'es', name: 'Spanish' },
-            { code: 'sv', name: 'Swedish' },
-            { code: 'tr', name: 'Turkish' },
+       
         ],
     },
     mutations: {
+        setLogin(state, login) {
+            state.login = login;
+        },
         setLayout(state, payload) {
             state.layout = payload;
         },
@@ -92,6 +82,9 @@ export default new createStore({
     getters: {
         layout(state) {
             return state.layout;
+        },
+        login(state) {
+            return state.login;
         },
     },
     actions: {},

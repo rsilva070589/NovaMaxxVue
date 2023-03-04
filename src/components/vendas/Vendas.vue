@@ -1,6 +1,5 @@
 <template>
-  
-
+ 
    <div style="position: fixed; margin-left: 97%;">
       <router-link class="button is-light" to="/vendas">   
         <svg
@@ -29,7 +28,7 @@
            background-size: 100%; 
            background-position: center;           
           "
-    v-bind:style="{ 'background-image': 'url(' + store.imagemAmbiente + ')' }"
+    v-bind:style="{ 'background-image': 'url(' + store1.imagemAmbiente + ')' }"
     > 
 
  
@@ -43,7 +42,7 @@
                 background-color: #000000DD;
                 color: white;
                 width: 265px;
-                border-radius: 10px;" type="text" placeholder="Nome do Cliente" v-model="store.nomeCliente">   
+                border-radius: 10px;" type="text" placeholder="Nome do Cliente" v-model="store1.nomeCliente">   
 
                 <div style="display: flex; padding: 5px 0px 0px 0px;">
                   <input style="padding: 5px; 
@@ -51,7 +50,7 @@
                                 background-color: #000000DD;
                                 color: white;
                                 width: 170px;
-                                border-radius: 10px;" type="text" placeholder="CPF/CNPJ" v-model="store.cpfCnpjCliente">    
+                                border-radius: 10px;" type="text" placeholder="CPF/CNPJ" v-model="store1.cpfCnpjCliente">    
 
                                 <input style="padding: 5px; 
                                 margin-left: 4px;
@@ -59,7 +58,7 @@
                                 background-color: #000000DD;
                                 color: white;
                                 width: 90px;
-                                border-radius: 10px;" type="text" placeholder="Casa" v-model="store.numeroCasa">  
+                                border-radius: 10px;" type="text" placeholder="Casa" v-model="store1.numeroCasa">  
                 </div>
 
     
@@ -72,7 +71,7 @@
                    border-radius: 10px;
                    
                    "
-          v-for="(a, indexA) in store.ambiente" :key="indexA">
+          v-for="(a, indexA) in store1.ambiente" :key="indexA">
     <div style="color: whitesmoke; font-weight: bold; font-size: 18px;
     border: 1px solid var(--bgContainer);
                           transition: all 0.2s ease 0s;
@@ -80,10 +79,10 @@
                         
   " 
        @click="AmbienteOpenClose(a);
-                        store.AmbienteOpen = a;                         
-                         selecionarImagem(store.AmbienteOpen); 
-                         store.dadosItensFiltro = store.dadosItens; 
-                         store.ilhaBalcao=null "
+       store1.AmbienteOpen = a;                         
+                         selecionarImagem(store1.AmbienteOpen); 
+                         store1.dadosItensFiltro = store1.dadosItens; 
+                         store1.ilhaBalcao=null "
   >
 
   <span class="item">
@@ -92,16 +91,16 @@
   
   </div>
 
-  <div v-if="store.AmbienteOpen == a  && store.AmbienteOpenClose"> 
+  <div v-if="store1.AmbienteOpen == a  && store1.AmbienteOpenClose"> 
 
 <div style="display: flex; justify-content: center;  margin: 10px 0px 0px 15px; "
         @click=""
 >
 
-  <div  v-if="getOpcional(store.AmbienteOpen, 'ILHA') > 0"     
-        style="" @click="store.ilhaBalcao='ILHA'; 
-                          selecionarImagem(store.AmbienteOpen)
-                          dadosFiltro(store.AmbienteOpen, store.ilhaBalcao)                
+  <div  v-if="getOpcional(store1.AmbienteOpen, 'ILHA') > 0"     
+        style="" @click="store1.ilhaBalcao='ILHA'; 
+                          selecionarImagem(store1.AmbienteOpen)
+                          dadosFiltro(store1.AmbienteOpen, store1.ilhaBalcao)                
                           ">     
         <label class="container">Com Ilha
         <input type="radio" checked="checked" name="radio">
@@ -109,10 +108,10 @@
         </label>
     </div>    
 
-    <div v-if="getOpcional(store.AmbienteOpen, 'BALCAO') > 0"  
-          style="" @click="store.ilhaBalcao='BALCAO';
-                           selecionarImagem(store.AmbienteOpen)
-                           dadosFiltro(store.AmbienteOpen, store.ilhaBalcao)  
+    <div v-if="getOpcional(store1.AmbienteOpen, 'BALCAO') > 0"  
+          style="" @click="store1.ilhaBalcao='BALCAO';
+                           selecionarImagem(store1.AmbienteOpen)
+                           dadosFiltro(store1.AmbienteOpen, store1.ilhaBalcao)  
                            ">  
             <label class="container">Com Balcão
             <input type="radio" name="radio">
@@ -125,7 +124,7 @@
 
     
     <div style="color: white; padding: 0px 0px 7px 0px; cursor: pointer; " 
-            v-for="(b, indexB) in store.itensTipo.filter(x => x.AMBIENTE==a)" :key="indexB"            
+            v-for="(b, indexB) in store1.itensTipo.filter(x => x.AMBIENTE==a)" :key="indexB"            
             >
           <span style="font-size: 16px;">
             {{ primeiraLetraMaiuscula(b.TIPO)}}  
@@ -142,7 +141,7 @@
                       justify-content: space-between;
                       
                        "                     
-               @click="store.BoxOpen = a+'-'+b.TIPO;" 
+               @click="store1.BoxOpen = a+'-'+b.TIPO;" 
                     >
                 <div>
                   Selecione
@@ -155,7 +154,7 @@
 
         <div  
                
-                v-for="(c, indexC) in store.itensSelecao.filter(x=>  x.AMBIENTE ==a 
+                v-for="(c, indexC) in store1.itensSelecao.filter(x=>  x.AMBIENTE ==a 
                                                                 && x.TIPO     ==b.TIPO 
                                                                         )" 
               :key="indexC"                                                              
@@ -169,7 +168,7 @@
                       display: flex;
                       justify-content: space-between;
                           "                     
-                @click="store.BoxOpen = a+'-'+b.TIPO" 
+                @click="store1.BoxOpen = a+'-'+b.TIPO" 
               >
             
             <div>
@@ -195,12 +194,12 @@
                   width: auto;
                   
                 "   
-            v-if="store.BoxOpen == a+'-'+b.TIPO"
+            v-if="store1.BoxOpen == a+'-'+b.TIPO"
              >
  
             <div class="itemSelect"
               style="display: flex; justify-content: space-between; padding-right: 10px;"                 
-              v-for="(d, indexD) in store.dadosItensFiltro.filter(x => x.AMBIENTE==a && x.TIPO==b.TIPO)" 
+              v-for="(d, indexD) in store1.dadosItensFiltro.filter(x => x.AMBIENTE==a && x.TIPO==b.TIPO)" 
               :key="indexD"
               :value="d.NOMENCLATURA"  
               @click="incluiItem(d)"
@@ -280,7 +279,7 @@
                           text-align: center;
                           margin-top: 15px;
                           "
-                          @click="store.itensSelecao = []"
+                          @click="store1.itensSelecao = []"
                           >
                 NOVO PEDIDO
               </div>
@@ -296,6 +295,8 @@
 <script setup>
     
     import {indexStore} from '../../store/IndexStore' 
+ 
+    import store from '../../store';
     import axios from 'axios'  
     import icons from '../../views/font_icons.vue'
     import { onMounted, ref } from 'vue';
@@ -308,30 +309,25 @@
     import jsPDF from 'jspdf';
       import { useRouter } from "vue-router";
     import 'jspdf-autotable';
+  
+     const store1 = indexStore(); 
  
-
-     const store = indexStore(); 
- 
-    function redireciona(){ 
-      console.log('redirect')
-      router.push("/itens") 
-    }
- 
+    
     async function getItens() { 
-      store.dadosItens = []
-    store.dadosItensFiltro = []
-    var result = await axios.get(store.baseApiHTTPS+'/itens')  
-    store.dadosItens = result.data
-    store.dadosItensFiltro = result.data 
+      store1.dadosItens = []
+      store1.dadosItensFiltro = []
+    var result = await axios.get(store1.baseApiHTTPS+'/itens')  
+    store1.dadosItens = result.data
+    store1.dadosItensFiltro = result.data 
     }     
 
 
     async function getAmbiente() {  
-    var result = await axios.get(store.baseApiHTTPS+'/imagens')  
-    store.ambiente = []
+    var result = await axios.get(store1.baseApiHTTPS+'/imagens')  
+    store1.ambiente = []
      result.data.map(x => {
         console.log(x.AMBIENTE)
-        return store.ambiente.push(x.AMBIENTE)
+        return store1.ambiente.push(x.AMBIENTE)
     })  
     }     
     getItens()
@@ -343,29 +339,29 @@
      
 
     function dadosFiltro(ambiente, tipo, opcional) { 
-      store.dadosItensFiltro = store.dadosItens
+      store1.dadosItensFiltro = store1.dadosItens
 
 
-       if (store.ilhaBalcao == null) {        
-        store.dadosItensFiltro = store.dadosItensFiltro.filter(x => x.AMBIENTE == ambiente)        
+       if (store1.ilhaBalcao == null) {        
+        store1.dadosItensFiltro = store1.dadosItensFiltro.filter(x => x.AMBIENTE == ambiente)        
        }else{
-        if (store.ilhaBalcao == 'ILHA') {
-          store.dadosItensFiltro = store.dadosItensFiltro.filter(x =>  x.AMBIENTE == ambiente && x.OPCIONAL != 'BALCAO')
-          store.ilhaBalcao
+        if (store1.ilhaBalcao == 'ILHA') {
+          store1.dadosItensFiltro = store1.dadosItensFiltro.filter(x =>  x.AMBIENTE == ambiente && x.OPCIONAL != 'BALCAO')
+          store1.ilhaBalcao
         } else{
-          store.dadosItensFiltro = store.dadosItensFiltro.filter(x =>  x.AMBIENTE == ambiente && x.OPCIONAL != 'ILHA')
+          store1.dadosItensFiltro = store1.dadosItensFiltro.filter(x =>  x.AMBIENTE == ambiente && x.OPCIONAL != 'ILHA')
         }        
        }
-       store.ilhaBalcao=null
+       store1.ilhaBalcao=null
     }
     
    
 
     async function getItensTipo() {
     
-    var result = await axios.get(store.baseApiHTTPS+'/itenstipo') 
-     
-    store.itensTipo = result.data
+    var result = await axios.get(store1.baseApiHTTPS+'/itenstipo') 
+ 
+    store1.itensTipo = result.data
      
     } 
     getItensTipo()
@@ -418,7 +414,7 @@
         
       /** somatoria de Todos os ambiente */
         
-      var arr =  store.itensSelecao.filter(i => i.AMBIENTE == ambiente)
+      var arr =  store1.itensSelecao.filter(i => i.AMBIENTE == ambiente)
     
       var sum = 0; 
 
@@ -434,7 +430,7 @@ function totalGeral () {
     
     /** somatoria de Todos os ambiente */
       
-    var arr =  store.itensSelecao
+    var arr =  store1.itensSelecao
    
     var sum = 0; 
   
@@ -447,8 +443,8 @@ function totalGeral () {
   }
    
 function getOpcional (ambiente,opcional) {
-   for(var i=0; i<store.dadosItens.length; i++) {
-      if(store.dadosItens[i].AMBIENTE === ambiente && store.dadosItens[i].OPCIONAL === opcional) {
+   for(var i=0; i<store1.dadosItens.length; i++) {
+      if(store1.dadosItens[i].AMBIENTE === ambiente && store1.dadosItens[i].OPCIONAL === opcional) {
          return i
       }
   }
@@ -456,8 +452,8 @@ function getOpcional (ambiente,opcional) {
 
     
 function buscaItem(ambiente, tipo) {
-   for(var i=0; i<store.itensSelecao.length; i++) {
-      if(store.itensSelecao[i].AMBIENTE === ambiente && store.itensSelecao[i].TIPO === tipo) {
+   for(var i=0; i<store1.itensSelecao.length; i++) {
+      if(store1.itensSelecao[i].AMBIENTE === ambiente && store1.itensSelecao[i].TIPO === tipo) {
          return i
       }
   }
@@ -466,31 +462,31 @@ function buscaItem(ambiente, tipo) {
 function incluiItem(item) {
   if (buscaItem(item.AMBIENTE, item.TIPO) > -1){
     
-    store.itensSelecao.splice(buscaItem(item.AMBIENTE, item.TIPO), 1)
-    store.itensSelecao.push(item)
+    store1.itensSelecao.splice(buscaItem(item.AMBIENTE, item.TIPO), 1)
+    store1.itensSelecao.push(item)
   }else{
    
-    store.itensSelecao.push(item)
+    store1.itensSelecao.push(item)
   }
-  store.BoxOpen = '' 
+  store1.BoxOpen = '' 
 } 
 
 async function getImagens() {
-     var result = await axios.get(store.baseApiHTTPS+'/imagens')      
-     store.imagens = result.data 
+     var result = await axios.get(store1.baseApiHTTPS+'/imagens')      
+     store1.imagens = result.data 
     }
     
 getImagens()
 
 
 function selecionarImagem(ambiente){ 
-  var result = store.imagens.filter(x=> x.AMBIENTE==ambiente) 
+  var result = store1.imagens.filter(x=> x.AMBIENTE==ambiente) 
   result.map(a=> {
-    if(store.ilhaBalcao == 'ILHA')
+    if(store1.ilhaBalcao == 'ILHA')
     {
-      store.imagemAmbiente = a.IMG
+      store1.imagemAmbiente = a.IMG
     }else{
-      store.imagemAmbiente = a.IMG_BALCAO || a.IMG
+      store1.imagemAmbiente = a.IMG_BALCAO || a.IMG
     }
     
 
@@ -525,8 +521,8 @@ const capitalize = (text) => {
 
 const export_table = (type) => {
         let cols = columns.value.filter((d) => d != 'profile' && d != 'action');
-        let records = store.itensSelecao;
-        let filename = store.nomeCliente || 'sem nome';
+        let records = store1.itensSelecao;
+        let filename = store1.nomeCliente || 'sem nome';
 
         if   (type == 'pdf') {
 
@@ -538,14 +534,14 @@ const export_table = (type) => {
             
             const arrayHead = []
 
-            store.ambiente.map( x => {  
-              console.log(store.itensSelecao.filter(d => d.AMBIENTE == x)) 
+            store1.ambiente.map( x => {  
+              console.log(store1.itensSelecao.filter(d => d.AMBIENTE == x)) 
               arrayHead.push() 
               doc.autoTable({           
                 headStyles: { fillColor: '#eff5ff', textColor: '#515365', fontsize: 40 },
                 head: [{TIPO: x}],
                 columns: cols,
-                body: store.itensSelecao.filter(d => d.AMBIENTE == x),                
+                body: store1.itensSelecao.filter(d => d.AMBIENTE == x),                
                 styles: { overflow: 'linebreak' },
                 pageBreak: 'auto',
                 margin: { top: 45 },
@@ -562,18 +558,18 @@ const export_table = (type) => {
 
     function AmbienteOpenClose(a) {
       
-      if (store.AmbienteOpenClose ) {
-        store.AmbienteOpenClose = false
+      if (store1.AmbienteOpenClose ) {
+        store1.AmbienteOpenClose = false
       }else{
-        store.AmbienteOpenClose = true        
+        store1.AmbienteOpenClose = true        
       }
     }
 
     function BoxOpenClose() {
-      if (store.BoxOpenClose) {
-        store.BoxOpenClose = false
+      if (store1.BoxOpenClose) {
+        store1.BoxOpenClose = false
       }else{
-        store.BoxOpenClose = true
+        store1.BoxOpenClose = true
       }
     }
 
@@ -582,7 +578,7 @@ const export_table = (type) => {
     const arrayItensPedido = []
 
 
-    store.itensSelecao.map(x => 
+    store1.itensSelecao.map(x => 
     
     arrayItensPedido.push({
                         "COD_ITEM": x.ID,
@@ -592,10 +588,10 @@ const export_table = (type) => {
     )
       
       var data = JSON.stringify({
-        "NOME": store.nomeCliente,
-        "COD_CLIENTE": store.cpfCnpjCliente,
+        "NOME": store1.nomeCliente,
+        "COD_CLIENTE": store1.cpfCnpjCliente,
         "EMPREENDIMENTO": "COMDOMINIO PADRAO",
-        "CASA": store.numeroCasa,
+        "CASA": store1.numeroCasa,
         "VALOR": totalGeral(),
         "DESCONTO": 0,
         "ITENS": arrayItensPedido.filter(x => x.COD_ITEM > 0)
