@@ -36,10 +36,10 @@ const routes = [
     //auth
    
     {
-        path: '/auth/login',
+        path: '/login',
         name: 'login',
         component: () => import(/* webpackChunkName: "auth-login" */ '../views/auth/login.vue'),
-        meta: { layout: 'app' },
+        meta: { layout: 'app' ,requiresAuth: true },
     },
       
 ];
@@ -85,7 +85,7 @@ router.beforeEach(async(to,from, next)=> {
           next();
         }else { 
           store.commit('setLayout', 'auth');
-          next("/auth/login")
+          next("/login")
         }
     }else {    
       next();

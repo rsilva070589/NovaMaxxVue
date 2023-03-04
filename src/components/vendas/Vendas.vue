@@ -1,8 +1,8 @@
 <template>
- 
+  
 
    <div style="position: fixed; margin-left: 97%;">
-      <router-link class="button is-light" to="/itens">   
+      <router-link class="button is-light" to="/vendas">   
         <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="35"
@@ -271,7 +271,7 @@
                           "
                      @click="export_table('pdf'); savePedido()"
                           >
-                FECHAR PEDIDO
+                SALVAR PEDIDO
               </div>
              
               <div style="border-style: solid; 
@@ -308,42 +308,39 @@
     import jsPDF from 'jspdf';
       import { useRouter } from "vue-router";
     import 'jspdf-autotable';
-    
+ 
+
+     const store = indexStore(); 
  
     function redireciona(){ 
       console.log('redirect')
       router.push("/itens") 
     }
  
+    async function getItens() { 
+      store.dadosItens = []
+    store.dadosItensFiltro = []
+    var result = await axios.get(store.baseApiHTTPS+'/itens')  
+    store.dadosItens = result.data
+    store.dadosItensFiltro = result.data 
+    }     
+
+
+    async function getAmbiente() {  
+    var result = await axios.get(store.baseApiHTTPS+'/imagens')  
+    store.ambiente = []
+     result.data.map(x => {
+        console.log(x.AMBIENTE)
+        return store.ambiente.push(x.AMBIENTE)
+    })  
+    }     
+    getItens()
+    getAmbiente()
    
-    const store = indexStore(); 
     
     const arrayAmbiente = []
 
-    
-    async function getItens() {
-    
-    var result = await axios.get(store.baseApiHTTPS+'/itens') 
-    
-    store.dadosItens = result.data
-    store.dadosItensFiltro = result.data
-    
-    store.dadosItens.forEach(i => {    
-        arrayAmbiente.push (i.AMBIENTE)      
-    }); 
-    
      
-    
-    arrayAmbiente.getUnique = function() {
-        var o = {}, a = [], i, e;
-        for (i = 0; e = this[i]; i++) {o[e] = 1};
-        for (e in o) {a.push (e)};   
-        return a;  
-       }         
-    store.ambiente=arrayAmbiente.getUnique()
-    }     
-    getItens()
-
 
     function dadosFiltro(ambiente, tipo, opcional) { 
       store.dadosItensFiltro = store.dadosItens
@@ -378,6 +375,7 @@
     if (minhaFrase == null) {
         return null
     }else{
+      if (minhaFrase){
         var minusculo = minhaFrase.toLowerCase()
         if(minusculo.length>25){
           return (minusculo.substring(0,25)).replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase())
@@ -385,20 +383,23 @@
             return (minusculo.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase()))
           }
     
-    }
+    }}
    
    }
     
     function primeiraLetraMaiuscula(minhaFrase) {  
-    if (minhaFrase == null) {
+    if (!minhaFrase == null) {
         return null
     }else{
+      if (minhaFrase){
         var minusculo = minhaFrase.toLowerCase()
         if(minusculo.length>50){
           return (minusculo.substring(0,50)+'...').replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase())
           }else{
             return (minusculo.replace(/(^\w{1})|(\s+\w{1})/g, letra => letra.toUpperCase()))
-          }    
+          }   
+      }
+         
     }   
    }
 
@@ -537,7 +538,8 @@ const export_table = (type) => {
             
             const arrayHead = []
 
-            store.ambiente.map( x => {   
+            store.ambiente.map( x => {  
+              console.log(store.itensSelecao.filter(d => d.AMBIENTE == x)) 
               arrayHead.push() 
               doc.autoTable({           
                 headStyles: { fillColor: '#eff5ff', textColor: '#515365', fontsize: 40 },
