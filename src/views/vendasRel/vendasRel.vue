@@ -3,9 +3,8 @@
         <h1 class="text-2xl font-medium mx-2" data-testid="statements-title-txt">Vendas</h1>
         <div> 
 </div> 
-  
- <br> 
  
+
     <div class="row layout-top-spacing">
             <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
                 <div class="panel p-0">
@@ -66,6 +65,7 @@
     import printer from './printer.vue'
     import pencil from './pencil.vue'
 import { async } from '@firebase/util';
+import { auto } from '@popperjs/core';
     useMeta({ title: 'Vendas' });
     const store = indexStore(); 
     const code_arr = ref([]);
@@ -87,6 +87,16 @@ import { async } from '@firebase/util';
     })  
     }      
 
+    function formataDinheiro(item) {
+         let venda = item;
+         if (!!venda && venda.toString().includes(",")) {
+           venda = venda.toString().replace(",", ".");
+         }
+         return parseFloat(venda)
+           .toFixed(2)
+           .replace(".", ",")
+           .replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
+    }
 
     async function selecionaItensVenda (ID_ITEM)  {
         const data =  store.dadosItens.filter(x => x.ID == ID_ITEM)[0]
@@ -96,7 +106,7 @@ import { async } from '@firebase/util';
             OPCIONAL : data.OPCIONAL,
             DESCRICAO: data.DESCRICAO,
             NOMENCLATURA: data.NOMENCLATURA,
-            PRECO_TOTAL: data.PRECO_TOTAL,
+            PRECO_TOTAL: formataDinheiro(data.PRECO_TOTAL),
             ID:         data.ID
         } 
         store.itensSelecao.push(item)
@@ -110,9 +120,30 @@ import { async } from '@firebase/util';
        }  )  
     }
     
-   
- 
   
+
+    function ambienteDistinct() {
+ 
+        const arrayProv = []
+
+        store.itensSelecao.map(x => { 
+            arrayProv.push(  x.AMBIENTE )
+        })
+
+       
+        arrayProv.getUnique = function() {
+            var o = {}, a = [], i, e;
+            for (i = 0; e = this[i]; i++) {o[e] = 1};
+            for (e in o) {a.push (e)};  
+            return a;  
+            }  
+
+          return  arrayProv.getUnique()
+         
+        
+    } 
+    
+   
     onMounted(() => {
         bind_data();  
     });
@@ -141,8 +172,7 @@ import { async } from '@firebase/util';
        
  
         result.data.map(x => {
-console.log(x)
-           
+ 
                 const item = {
                     Casa: x.CASA,
                     CPF_CNPJ: x.COD_CLIENTE,
@@ -221,13 +251,8 @@ const export_table =  async (type, dados) => {
  
 
 const capitalize = (text) => {
-    return text
-        .replace('_', ' ')
-        .replace('-', ' ')
-        .toLowerCase()
-        .split(' ')
-        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-        .join(' ');
+    return text 
+        
 };
 const columns = ref(['TIPO', 'DESCRICAO', 'PRECO_TOTAL']); 
  
@@ -239,6 +264,8 @@ selecionaVenda(dados.ID)
 
 
 
+
+
 let cols = columns.value.filter((d) => d != 'profile' && d != 'action'); 
 let filename = dados.Nome || 'sem nome';
 
@@ -247,28 +274,35 @@ if  (type == 'pdf') {
     cols = cols.map((d) => {
         return { header: capitalize(d), dataKey: d };
     });
-
-    const doc = new jsPDF('l', 'pt', cols.length > 10 ? 'a3' : 'a4');
+    const doc = new jsPDF('p', 'mm', [297, 210]);
+    let str = "Pagina: ";
+    let pageCurrent = doc.internal.getCurrentPageInfo().pageNumber;
+    var pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
+    var pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
     
     const arrayHead = []
   
-    store.ambiente.map( x => {    
+    ambienteDistinct().map( x => {    
       arrayHead.push() 
       doc.autoTable({           
         headStyles: { fillColor: '#eff5ff', textColor: '#515365', fontsize: 40 },
-        head: [{TIPO: x}],
+        head: [{TIPO: x},['TIPO', 'DESCRICAO', 'VALOR']],
         columns: cols,
-        body: store.itensSelecao.filter(d => d.AMBIENTE == x),                
+        body: store.itensSelecao.filter(d => d.AMBIENTE == x),    
+        columnStyles: {0: {halign: 'left'} ,1: {halign: 'left'} , 2: {halign: 'right'} },
         styles: { overflow: 'linebreak' },
         pageBreak: 'auto',
-        margin: { top: 45 },
-        didDrawPage: () => {
-            doc.text('ANEXO 1', cols.length > 10 ? 535 : 365, 30);
+        margin: { top: 9 },
+        didDrawPage: () => { 
+            doc.text('ANEXO 1',90, 6);
+            doc.setTextColor(105);
+            doc.setFontSize(10);
+            doc.text(str + doc.internal.getCurrentPageInfo().pageNumber, pageWidth / 2, pageHeight  - 10, {align: 'center'}); 
         },
     });          
     }) 
  
-    doc.save(filename + '.pdf');
+    doc.save(filename + '.pdf');   
 }
 };
 

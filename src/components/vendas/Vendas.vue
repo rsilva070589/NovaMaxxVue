@@ -325,8 +325,7 @@
     async function getAmbiente() {  
     var result = await axios.get(store1.baseApiHTTPS+'/imagens')  
     store1.ambiente = []
-     result.data.map(x => {
-        console.log(x.AMBIENTE)
+     result.data.map(x => { 
         return store1.ambiente.push(x.AMBIENTE)
     })  
     }     
