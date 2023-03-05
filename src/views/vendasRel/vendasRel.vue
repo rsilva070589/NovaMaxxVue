@@ -248,8 +248,7 @@ import { auto } from '@popperjs/core';
  
 
 const export_table =  async (type, dados) => {
- 
-
+  
 const capitalize = (text) => {
     return text 
         
@@ -260,11 +259,7 @@ store.nomeCliente = dados.Nome
 store.cpfCnpjCliente = dados.CPF_CNPJ
 store.numeroCasa = dados.Casa
 
-selecionaVenda(dados.ID)
-
-
-
-
+selecionaVenda(dados.ID) 
 
 let cols = columns.value.filter((d) => d != 'profile' && d != 'action'); 
 let filename = dados.Nome || 'sem nome';

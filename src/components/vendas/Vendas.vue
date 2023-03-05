@@ -268,7 +268,7 @@
                           border-radius: 10px; 
                           text-align: center;                                               
                           "
-                     @click="export_table('pdf'); savePedido()"
+                     @click="export_table('pdf');"
                           >
                 SALVAR PEDIDO
               </div>
@@ -294,8 +294,7 @@
     
 <script setup>
     
-    import {indexStore} from '../../store/IndexStore' 
- 
+    import {indexStore} from '../../store/IndexStore'  
     import store from '../../store';
     import axios from 'axios'  
     import icons from '../../views/font_icons.vue'
@@ -519,41 +518,72 @@ const capitalize = (text) => {
     };
 
 const export_table = (type) => {
-        let cols = columns.value.filter((d) => d != 'profile' && d != 'action');
-        let records = store1.itensSelecao;
-        let filename = store1.nomeCliente || 'sem nome';
+  savePedido()
 
-        if   (type == 'pdf') {
+  function ambienteDistinct() { 
+        const arrayProv = []   
+        store1.itensSelecao.filter( f => f.AMBIENTE != null).map(x => {  
+            arrayProv.push(  x.AMBIENTE )
+        }) 
 
-            cols = cols.map((d) => {
-                return { header: capitalize(d), dataKey: d };
-            });
+        console.log(arrayProv)
+        arrayProv.getUnique = function() {
+            var o = {}, a = [], i, e;
+            for (i = 0; e = this[i]; i++) {o[e] = 1};
+            for (e in o) {a.push (e)};  
+            console.log(a)
+            return a;  
+            }  
 
-            const doc = new jsPDF('l', 'pt', cols.length > 10 ? 'a3' : 'a4');
-            
-            const arrayHead = []
+          return  arrayProv.getUnique()
+        } 
 
-            store1.ambiente.map( x => {  
-              console.log(store1.itensSelecao.filter(d => d.AMBIENTE == x)) 
-              arrayHead.push() 
-              doc.autoTable({           
-                headStyles: { fillColor: '#eff5ff', textColor: '#515365', fontsize: 40 },
-                head: [{TIPO: x}],
-                columns: cols,
-                body: store1.itensSelecao.filter(d => d.AMBIENTE == x),                
-                styles: { overflow: 'linebreak' },
-                pageBreak: 'auto',
-                margin: { top: 45 },
-                didDrawPage: () => {
-                    doc.text('ANEXO 1', cols.length > 10 ? 535 : 365, 30);
-                },
-            });          
-            }) 
+        
+const capitalize = (text) => {
+    return text 
+        
+};
+const columns = ref(['TIPO', 'DESCRICAO', 'PRECO_TOTAL']);  
 
-      
-            doc.save(filename + '.pdf');
-        }
-    };
+let cols = columns.value.filter((d) => d != 'profile' && d != 'action'); 
+let filename = store1.nomeCliente|| 'sem nome';
+
+if  (type == 'pdf') {
+
+    cols = cols.map((d) => {
+        return { header: capitalize(d), dataKey: d };
+    });
+    const doc = new jsPDF('p', 'mm', [297, 210]);
+    let str = "Pagina: ";
+    let pageCurrent = doc.internal.getCurrentPageInfo().pageNumber;
+    var pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
+    var pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
+    
+    const arrayHead = []
+  
+    ambienteDistinct().map( x => {    
+      arrayHead.push() 
+      doc.autoTable({           
+        headStyles: { fillColor: '#eff5ff', textColor: '#515365', fontsize: 40 },
+        head: [{TIPO: x},['TIPO', 'DESCRICAO', 'VALOR']],
+        columns: cols,
+        body: store1.itensSelecao.filter(d => d.AMBIENTE == x),    
+        columnStyles: {0: {halign: 'left'} ,1: {halign: 'left'} , 2: {halign: 'right'} },
+        styles: { overflow: 'linebreak' },
+        pageBreak: 'auto',
+        margin: { top: 9 },
+        didDrawPage: () => { 
+            doc.text('ANEXO 1',90, 6);
+            doc.setTextColor(105);
+            doc.setFontSize(10);
+            doc.text(str + doc.internal.getCurrentPageInfo().pageNumber, pageWidth / 2, pageHeight  - 10, {align: 'center'}); 
+        },
+    });          
+    }) 
+ 
+    doc.save(filename + '.pdf');   
+    }
+  }
 
     function AmbienteOpenClose(a) {
       
