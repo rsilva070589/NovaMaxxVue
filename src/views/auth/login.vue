@@ -100,6 +100,7 @@
   import {indexStore} from '../../store/IndexStore' 
   import store from '../../store';
  
+  store.commit('setLayout', 'auth');
 
   const store1 = indexStore(); 
   const router = useRouter()

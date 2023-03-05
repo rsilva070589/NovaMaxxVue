@@ -10,7 +10,7 @@ export default new createStore({
         is_dark_mode: false,
         dark_mode: 'light',
         locale: null,
-        menu_style: 'vertical',
+        menu_style: 'collapsible-vertical',
         layout_style: 'full',
         countryList: [
        
