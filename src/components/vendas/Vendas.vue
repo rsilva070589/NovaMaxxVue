@@ -80,7 +80,7 @@
                         
   " 
        @click="AmbienteOpenClose(a);
-       store1.AmbienteOpen = a;                         
+                         store1.AmbienteOpen = a;                         
                          selecionarImagem(store1.AmbienteOpen); 
                          store1.dadosItensFiltro = store1.dadosItens; 
                          store1.ilhaBalcao=null "
@@ -127,7 +127,7 @@
     <div style="color: white; padding: 0px 0px 7px 0px; cursor: pointer; " 
             v-for="(b, indexB) in store1.itensTipo.filter(x => x.AMBIENTE==a)" :key="indexB"            
             >
-          <span style="font-size: 16px;">
+          <span style="font-size: 16px;" @dblclick="clearAmbiente(a, b.TIPO)">
             {{ primeiraLetraMaiuscula(b.TIPO)}}  
           </span>  
    
@@ -142,7 +142,7 @@
                       justify-content: space-between;
                       
                        "                     
-               @click="store1.BoxOpen = a+'-'+b.TIPO;" 
+               @click="boxOpen(a, b.TIPO)" 
                     >
                 <div>
                   Selecione
@@ -155,8 +155,8 @@
 
         <div  
                
-                v-for="(c, indexC) in store1.itensSelecao.filter(x=>  x.AMBIENTE ==a 
-                                                                && x.TIPO     ==b.TIPO 
+                v-for="(c, indexC) in store1.itensSelecao.filter(x=>   x.AMBIENTE ==a 
+                                                                    && x.TIPO     ==b.TIPO 
                                                                         )" 
               :key="indexC"                                                              
               style=" 
@@ -413,16 +413,13 @@
         
       /** somatoria de Todos os ambiente */
         
-      var arr =  store1.itensSelecao.filter(i => i.AMBIENTE == ambiente)
-
-    console.log(arr)
-    
+      var arr =  store1.itensSelecao.filter(i => i.AMBIENTE == ambiente) 
       var sum = 0; 
 
       for(var i =0;i<arr.length;i++){ 
         sum+=arr[i].PRECO_TOTAL; 
       } 
-      console.log(sum)
+ 
       return formataDinheiro(sum)
 
     }
@@ -444,8 +441,10 @@ function totalGeral () {
   }
    
 function getOpcional (ambiente,opcional) {
-   for(var i=0; i<store1.dadosItens.length; i++) {
-      if(store1.dadosItens[i].AMBIENTE === ambiente && store1.dadosItens[i].OPCIONAL === opcional) {
+ 
+   for(var i=0; i<store1.dadosItens.length; i++) { 
+      if(store1.dadosItens[i].AMBIENTE == ambiente && store1.dadosItens[i].OPCAO == opcional) {
+         
          return i
       }
   }
@@ -588,6 +587,24 @@ if  (type == 'pdf') {
     }
   }
 
+  function boxOpen (ambiente, tipo) {
+    if (store1.BoxOpen) {
+      store1.BoxOpen = null
+    } else {
+      store1.BoxOpen = ambiente+'-'+tipo
+    }
+    
+  }
+
+  function clearAmbiente (ambiente, tipo) {
+    console.log('Clear Ambiente: '+ambiente + ' / Tipo: '+tipo)
+    console.log(store1.itensSelecao.filter(f => f.AMBIENTE == ambiente && f.TIPO == tipo))
+    store1.itensSelecao.splice(buscaItem(ambiente, tipo), 1)
+    
+  }
+
+
+ 
     function AmbienteOpenClose(a) {
       
       if (store1.AmbienteOpenClose ) {
@@ -597,13 +614,7 @@ if  (type == 'pdf') {
       }
     }
 
-    function BoxOpenClose() {
-      if (store1.BoxOpenClose) {
-        store1.BoxOpenClose = false
-      }else{
-        store1.BoxOpenClose = true
-      }
-    }
+  
 
     function savePedido(){
  

@@ -22,8 +22,7 @@ export const indexStore = defineStore("rotas", () =>{
                                 OPCIONAL: null, 
                                 DESCRICAO: null,
                                 PRECO_TOTAL: null ,
-                                 ID_ITEM: null 
-
+                                 ID_ITEM: null  
                         } ]
 
     const usuarioLogado = false                
@@ -56,13 +55,13 @@ export const indexStore = defineStore("rotas", () =>{
         UND: 0,
         QTDE: 0, 
         VLR_UNITARIO: 0, 
-         FRETE: 0, 
-         VLR_MAO_OBRA: 0, 
-         CONTINGENCIA: 0,
-         CUSTO_TOTAL: 0,
-         TAXA: 0,
-         PRECO_TOTAL: 0,
-         LUCRO: 0
+        FRETE: 0, 
+        VLR_MAO_OBRA: 0, 
+        CONTINGENCIA: 0,
+        CUSTO_TOTAL: 0,
+        TAXA: 0,
+        PRECO_TOTAL: 0,
+        LUCRO: 0
         } 
 
         const login = {
@@ -71,6 +70,14 @@ export const indexStore = defineStore("rotas", () =>{
         }
 
         const pedidoEdit_cod = null
+
+        
+        const cadastroAmbiente = {
+            AMBIENTE: null,
+            IMG: null,
+            ID: null,
+            SEQUENCIA: null,
+        }
 
 const reflesh = false
     
@@ -95,7 +102,8 @@ const reflesh = false
         reflesh,
         itensVendas,
         login,
-        pedidoEdit_cod
+        pedidoEdit_cod,
+        cadastroAmbiente
     }
 });
 

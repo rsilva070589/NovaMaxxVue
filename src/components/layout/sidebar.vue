@@ -17,9 +17,7 @@
  
                     <a class="dropdown-toggle"  aria-controls="dashboard" aria-expanded="false">
                    
-                   <div style="color: black; " @click="goItens()" >     
-                                              
-                                         
+                   <div style="color: black; " @click="goItens()" >    
                         <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24"
@@ -57,7 +55,48 @@
                            <polyline points="9 18 15 12 9 6"></polyline>
                        </svg>
                    </div>
-               </a>
+                    </a>
+
+
+                    <a class="dropdown-toggle"  aria-controls="dashboard" aria-expanded="false">
+                   
+                   <div style="color: black; " @click="goAmbiente()" >    
+                        <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="feather feather-home"
+                                >
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>                     
+                      <span style="color: white; font-size: 20px;">{{ $t('Ambiente') }}</span>
+                    
+                   </div>
+                   
+                   <div>
+                       <svg
+                           xmlns="http://www.w3.org/2000/svg"
+                           width="24"
+                           height="24"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                           class="feather feather-chevron-right"
+                       >
+                           <polyline points="9 18 15 12 9 6"></polyline>
+                       </svg>
+                   </div>
+                    </a>
 
 
                     <a class="dropdown-toggle"  aria-controls="dashboard" aria-expanded="false">
@@ -195,6 +234,11 @@
     const goItens = () => {
         router.push("/itens")
       console.log('itens')
+    }   
+
+    const goAmbiente = () => {
+        router.push("/ambiente")
+      console.log('ambiente')
     }   
      
  

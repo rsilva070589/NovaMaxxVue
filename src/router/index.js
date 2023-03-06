@@ -34,6 +34,14 @@ const routes = [
         meta: { layout: 'app' ,requiresAuth: true }
     },
 
+    {
+      path: '/ambiente',
+      name: 'ambiente',
+      component: () => import(/* webpackChunkName: "index2" */ '../views/ambiente/Ambiente.vue'),
+     
+      meta: { layout: 'app' ,requiresAuth: true }
+  },
+
     //auth
    
     {
