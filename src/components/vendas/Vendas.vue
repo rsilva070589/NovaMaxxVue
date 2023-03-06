@@ -125,7 +125,7 @@
 
     
     <div style="color: white; padding: 0px 0px 7px 0px; cursor: pointer; " 
-            v-for="(b, indexB) in store1.itensTipo.filter(x => x.AMBIENTE==a)" :key="indexB"            
+            v-for="(b, indexB) in store1.itensTipo.filter(x => x.AMBIENTE==a && x.TIPO != null)" :key="indexB"            
             >
           <span style="font-size: 16px;" @dblclick="clearAmbiente(a, b.TIPO)">
             {{ primeiraLetraMaiuscula(b.TIPO)}}  
@@ -200,7 +200,7 @@
  
             <div class="itemSelect"
               style="display: flex; justify-content: space-between; padding-right: 10px;"                 
-              v-for="(d, indexD) in store1.dadosItensFiltro.filter(x => x.AMBIENTE==a && x.TIPO==b.TIPO)" 
+              v-for="(d, indexD) in store1.dadosItensFiltro.filter(x => x.AMBIENTE==a && x.TIPO==b.TIPO && x.ID < 10000)" 
               :key="indexD"
               :value="d.NOMENCLATURA"  
               @click="incluiItem(d)"

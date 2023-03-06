@@ -2,7 +2,16 @@
     <div class="layout-px-spacing" style="margin-top: -100px;">
         <h1 class="text-2xl font-medium mx-2" data-testid="statements-title-txt">Vendas</h1>
         <div> 
-</div>  
+</div>   
+<div  v-if="store.MudaStatus" style="font-size: 20px;" >
+Mudar Status do Pedido: {{ store.MudaStatus }}
+<select v-model="store.statusPedido" @click="confirmaStatus()"> 
+  <option value=1>Ativo</option>
+  <option value=2>Cancelado</option>
+  <option value=3>Finalizado</option>
+</select>
+
+</div>
 
     <div class="row layout-top-spacing">
             <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
@@ -32,8 +41,8 @@
                             <template #profile="props">
                                 <img :src="require('@/assets/images/' + props.row.thumb)" class="rounded-circle profile-img" alt="avatar" />
                             </template>
-                            <template #status="props">
-                                <span class="badge inv-status" :class="'badge-' + props.row.status.class">{{ props.row.status.key }}</span>
+                            <template #status="props" >
+                                <span @click="mudaStatus(props)" class="badge inv-status" :class="'badge-' + props.row.status.class">{{ props.row.status.key }}</span>
                             </template>
                          
                           
@@ -258,7 +267,50 @@
           
     }
 
-    
+const mudaStatus = async(props)=> {
+    if (store.MudaStatus == null) {
+        store.statusPedido = null 
+        store.MudaStatus = props.row.ID
+ 
+    }else {
+        store.MudaStatus = null
+    }
+  
+}
+
+const confirmaStatus = async()=>{
+   
+    console.log('alterando statuso do pedido '+store.MudaStatus + ' para '+store.statusPedido)
+
+    var data = 
+    JSON.stringify ( {
+                        "ID": store.MudaStatus,
+                        "STATUS": store.statusPedido
+                    })
+
+    var config = {
+        method: 'put',
+        maxBodyLength: Infinity,
+        url: 'https://json-replace-oracle-production.up.railway.app/pedidos',
+        //url: 'http://localhost:4040/pedidos/' + store.MudaStatus,
+        headers: { 
+            'Content-Type': 'application/json'
+        },
+        data : data
+        };
+
+        axios(config)
+        .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        bind_data()
+        store.MudaStatus = null
+        })
+        .catch(function (error) {
+        console.log(error);
+        });
+
+     
+}
  
 
 const export_table =  async (type, dados) => {
