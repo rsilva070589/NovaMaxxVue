@@ -1,6 +1,7 @@
-<template>
- 
-   <div style="position: fixed; margin-left: 97%;">
+<template> 
+   <div style="position: fixed; margin-left: 97%;"
+        @click="store1.pedidoEdit_cod=false"
+   >
       <router-link class="button is-light" to="/vendas">   
         <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +21,7 @@
                         ></path>
                     </svg>
         </router-link> 
-    </div>
+    </div> 
    
     <div  
     style="
@@ -413,13 +414,15 @@
       /** somatoria de Todos os ambiente */
         
       var arr =  store1.itensSelecao.filter(i => i.AMBIENTE == ambiente)
+
+    console.log(arr)
     
       var sum = 0; 
 
       for(var i =0;i<arr.length;i++){ 
         sum+=arr[i].PRECO_TOTAL; 
       } 
-      
+      console.log(sum)
       return formataDinheiro(sum)
 
     }
@@ -518,7 +521,7 @@ const capitalize = (text) => {
     };
 
 const export_table = (type) => {
-  savePedido()
+  processaPedido()
 
   function ambienteDistinct() { 
         const arrayProv = []   
@@ -603,9 +606,9 @@ if  (type == 'pdf') {
     }
 
     function savePedido(){
+ 
 
-    const arrayItensPedido = []
-
+    const arrayItensPedido = [] 
 
     store1.itensSelecao.map(x => 
     
@@ -615,16 +618,35 @@ if  (type == 'pdf') {
                         "DESCONTO": 0
                         })
     )
-      
-      var data = JSON.stringify({
+    
+    function processar (){
+      if (store1.pedidoEdit_cod) {
+        var data1 = JSON.stringify({
+        "SEQUENCIA": store1.pedidoEdit_cod,
         "NOME": store1.nomeCliente,
         "COD_CLIENTE": store1.cpfCnpjCliente,
         "EMPREENDIMENTO": "COMDOMINIO PADRAO",
         "CASA": store1.numeroCasa,
         "VALOR": totalGeral(),
         "DESCONTO": 0,
-        "ITENS": arrayItensPedido.filter(x => x.COD_ITEM > 0)
-      });
+        "ITENS": arrayItensPedido.filter(x => x.COD_ITEM > 0)  
+      })
+          return data1
+      }else{
+        var data1 = JSON.stringify({ 
+        "NOME": store1.nomeCliente,
+        "COD_CLIENTE": store1.cpfCnpjCliente,
+        "EMPREENDIMENTO": "COMDOMINIO PADRAO",
+        "CASA": store1.numeroCasa,
+        "VALOR": totalGeral(),
+        "DESCONTO": 0,
+        "ITENS": arrayItensPedido.filter(x => x.COD_ITEM > 0)  
+      })
+          return data1
+      }
+    }
+      
+      var data = processar()
 
        var config = {
         method: 'post',
@@ -645,7 +667,44 @@ if  (type == 'pdf') {
       });
 
     }
+
+    function deletePedido(){
+
+    console.log('Atualizando o Pedido: '+store1.pedidoEdit_cod) 
+
+    var data = JSON.stringify({
+      "ID": store1.pedidoEdit_cod
+      });
+
+    var config = {
+      method: 'delete',
+      maxBodyLength: Infinity,
+      url: 'https://json-replace-oracle-production.up.railway.app/pedidos',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      data : data
+    };
+
+    axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+    }
  
+    function processaPedido (){
+        if (store1.pedidoEdit_cod) {
+          deletePedido()
+          savePedido()
+        }else {
+          savePedido()
+        }
+    }
+
      
 
  

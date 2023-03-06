@@ -2,8 +2,7 @@
     <div class="layout-px-spacing" style="margin-top: -100px;">
         <h1 class="text-2xl font-medium mx-2" data-testid="statements-title-txt">Vendas</h1>
         <div> 
-</div> 
- 
+</div>  
 
     <div class="row layout-top-spacing">
             <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
@@ -64,8 +63,8 @@
     import { useMeta } from '@/composables/use-meta';
     import printer from './printer.vue'
     import pencil from './pencil.vue'
-import { async } from '@firebase/util';
-import { auto } from '@popperjs/core';
+    import { async } from '@firebase/util';
+    import { auto } from '@popperjs/core';
     useMeta({ title: 'Vendas' });
     const store = indexStore(); 
     const code_arr = ref([]);
@@ -100,16 +99,28 @@ import { auto } from '@popperjs/core';
 
     async function selecionaItensVenda (ID_ITEM)  {
         const data =  store.dadosItens.filter(x => x.ID == ID_ITEM)[0]
-        const item = {
+        if (!store.pedidoEdit_cod){ 
+        store.itensSelecao.push({
+                                AMBIENTE : data.AMBIENTE,
+                                TIPO     : data.TIPO,
+                                OPCIONAL : data.OPCIONAL,
+                                DESCRICAO: data.DESCRICAO,
+                                NOMENCLATURA: data.NOMENCLATURA,
+                                PRECO_TOTAL: formataDinheiro(data.PRECO_TOTAL),
+                                ID:         data.ID
+                            } )
+        }else{
+         
+        store.itensSelecao.push({
             AMBIENTE : data.AMBIENTE,
             TIPO     : data.TIPO,
             OPCIONAL : data.OPCIONAL,
             DESCRICAO: data.DESCRICAO,
             NOMENCLATURA: data.NOMENCLATURA,
-            PRECO_TOTAL: formataDinheiro(data.PRECO_TOTAL),
+            PRECO_TOTAL: data.PRECO_TOTAL,
             ID:         data.ID
-        } 
-        store.itensSelecao.push(item)
+        } )
+        }
     }
 
     async function selecionaVenda (ID_VENDA) {
@@ -229,15 +240,18 @@ import { auto } from '@popperjs/core';
 
   
  
-    const editPedido = async (props)=> { 
+    const editPedido = async (props)=> {  
+
+        store.nomeCliente = props.row.Nome
+        store.cpfCnpjCliente = props.row.CPF_CNPJ
+        store.numeroCasa = props.row.Casa
+
+        store.pedidoEdit_cod = props.row.ID
         selecionaVenda(props.row.ID)
+       
   }
 
-  
-    
-  
-
-
+   
     const getPedido = async (props)=> { 
      
        export_table('pdf', props.row)

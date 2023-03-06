@@ -70,6 +70,8 @@ export const indexStore = defineStore("rotas", () =>{
             senha: null
         }
 
+        const pedidoEdit_cod = null
+
 const reflesh = false
     
     
@@ -92,7 +94,8 @@ const reflesh = false
         usuarioLogado,
         reflesh,
         itensVendas,
-        login
+        login,
+        pedidoEdit_cod
     }
 });
 
